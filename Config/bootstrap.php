@@ -13,6 +13,19 @@
  * @since         CakePHP(tm) v 0.10.8.2117
  */
 
+ CakePlugin::load(array(
+ 	'BootstrapCake',
+ 	'Bs3Helpers',
+ 	//'Configuration',
+ 	'ClearCache',
+ 	//'RangeParser',
+ 	'Gallery' => array(
+ 		'bootstrap' => true,
+ 		'routes' => true
+ 	),
+ 	//'Localized',
+ 	//'DebugKit',
+ ));
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
