@@ -1,0 +1,333 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "56148d89ac4b7343e6bf61ffe9a61dab",
+    "packages": [
+        {
+            "name": "cakephp/cakephp",
+            "version": "2.6.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cakephp/cakephp.git",
+                "reference": "c037e04ace30f07d0b691e13fcf556d4570b4b88"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c037e04ace30f07d0b691e13fcf556d4570b4b88",
+                "reference": "c037e04ace30f07d0b691e13fcf556d4570b4b88",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mcrypt": "*",
+                "php": ">=5.2.8"
+            },
+            "require-dev": {
+                "cakephp/debug_kit": "2.2.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "bin": [
+                "lib/Cake/Console/cake"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CakePHP Community",
+                    "homepage": "https://github.com/cakephp/cakephp/graphs/contributors"
+                }
+            ],
+            "description": "The CakePHP framework",
+            "homepage": "http://cakephp.org",
+            "keywords": [
+                "framework"
+            ],
+            "time": "2015-06-30 02:35:55"
+        },
+        {
+            "name": "ceeram/clear_cache",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ceeram/clear_cache.git",
+                "reference": "25f8e6e4dee0175a536b29138d5255604644f7d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ceeram/clear_cache/zipball/25f8e6e4dee0175a536b29138d5255604644f7d0",
+                "reference": "25f8e6e4dee0175a536b29138d5255604644f7d0",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "installer-name": "ClearCache"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Clear CakePHP caches from shell, app or debug_kit panel",
+            "homepage": "http://github.com/ceeram/clear_cache",
+            "time": "2014-11-19 08:36:13"
+        },
+        {
+            "name": "codaxis/cakephp-bootstrap3-helpers",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codaxis/cakephp-bootstrap3-helpers.git",
+                "reference": "14a3e58059726f21acd087d8c3f8b97ad1be7f42"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codaxis/cakephp-bootstrap3-helpers/zipball/14a3e58059726f21acd087d8c3f8b97ad1be7f42",
+                "reference": "14a3e58059726f21acd087d8c3f8b97ad1be7f42",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "installer-name": "Bs3Helpers"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "augusto-cdxs",
+                    "email": "augusto@codaxis.com",
+                    "homepage": "http://codaxis.com"
+                }
+            ],
+            "description": "CakePHP highly configurable helpers for Bootstrap 3 framework.",
+            "homepage": "https://github.com/Codaxis/bootstrap3-helpers",
+            "keywords": [
+                "bootstrap",
+                "cakephp",
+                "helper"
+            ],
+            "time": "2014-07-04 21:40:53"
+        },
+        {
+            "name": "composer/installers",
+            "version": "v1.0.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
+                "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
+                "shasum": ""
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Hurad",
+                "MODX Evo",
+                "OXID",
+                "SMF",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "elgg",
+                "fuelphp",
+                "grav",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lithium",
+                "magento",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "moodle",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "zend",
+                "zikula"
+            ],
+            "time": "2015-02-18 17:17:01"
+        },
+        {
+            "name": "hugodias/cakegallery",
+            "version": "dev-locale",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ptica/cakegallery.git",
+                "reference": "f3ff4f15ec4da621d9d40e230ed34e992d142ffc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ptica/cakegallery/zipball/f3ff4f15ec4da621d9d40e230ed34e992d142ffc",
+                "reference": "f3ff4f15ec4da621d9d40e230ed34e992d142ffc",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "installer-name": "Gallery"
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hugo Dias",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "No description",
+            "homepage": "http://github.com/hugodias/cakegallery",
+            "keywords": [
+                "cakephp"
+            ],
+            "support": {
+                "issues": "https://github.com/hugodias/cakegallery/issues",
+                "source": "https://github.com/hugodias/cakegallery"
+            },
+            "time": "2015-06-08 21:16:33"
+        },
+        {
+            "name": "ptica/BootstrapCake",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ptica/BootstrapCake.git",
+                "reference": "c922d76245b95f3cca53c02fcab5e9573020112c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ptica/BootstrapCake/zipball/c922d76245b95f3cca53c02fcab5e9573020112c",
+                "reference": "c922d76245b95f3cca53c02fcab5e9573020112c",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "2.*",
+                "composer/installers": "~1.0"
+            },
+            "type": "cakephp-plugin",
+            "support": {
+                "source": "https://github.com/ptica/BootstrapCake/tree/master"
+            },
+            "time": "2015-07-01 08:55:28"
+        },
+        {
+            "name": "webtechnick/configuration",
+            "version": "dev-bootstrap_theme",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ptica/CakePHP-Configuration-Plugin.git",
+                "reference": "8dbcf470545a7c7acc36bc930d6110729f226213"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ptica/CakePHP-Configuration-Plugin/zipball/8dbcf470545a7c7acc36bc930d6110729f226213",
+                "reference": "8dbcf470545a7c7acc36bc930d6110729f226213",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "authors": [
+                {
+                    "name": "Nick Baker",
+                    "email": "nick@webtechnick.com"
+                }
+            ],
+            "description": "The Configuration plugin is an extremely useful way to store site-wide configuration.",
+            "homepage": "http://www.webtechnick.com/blogs/view/223/CakePHP_Configuration_Plugin",
+            "keywords": [
+                "cakephp",
+                "configuration"
+            ],
+            "support": {
+                "issues": "https://github.com/webtechnick/CakePHP-Configuration-Plugin/issues",
+                "source": "https://github.com/webtechnick/CakePHP-Configuration-Plugin"
+            },
+            "time": "2015-01-30 10:29:53"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "ptica/bootstrapcake": 20,
+        "webtechnick/configuration": 20,
+        "hugodias/cakegallery": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

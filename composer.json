@@ -1,0 +1,38 @@
+{
+    "name": "ShedouCZ/beachklub",
+    "authors": [
+        {
+            "name": "Vojtěch Laňka",
+            "email": "vojta.lanka@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ptica/BootstrapCake"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ptica/i18n"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ptica/CakePHP-Configuration-Plugin"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ptica/cakegallery.git"
+        }
+    ],
+    "require": {
+        "cakephp/cakephp": "2.6.*",
+        "ptica/BootstrapCake": "dev-master",
+        "codaxis/cakephp-bootstrap3-helpers": "1.1",
+        "ceeram/clear_cache": "~1.1",
+        "webtechnick/configuration": "dev-bootstrap_theme",
+        "hugodias/cakegallery": "dev-locale"
+    },
+    "config": {
+        "vendor-dir": "Vendor/"
+    }
+}
