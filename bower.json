@@ -22,7 +22,7 @@
     "Jed": "SlexAxton/Jed",
     "fluidbox": "~1.3.5",
     "tinycolorpicker": "ptica/tinycolorpicker#master",
-    "html.sortable": "~0.1.6",
+    "Sortable": "~1.2.0",
     "bootstrap3-wysihtml5-bower": "~0.3.3",
     "fullcalendar-history": "ptica/fullcalendar-history",
     "notes": "ptica/notes",
