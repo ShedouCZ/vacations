@@ -1,0 +1,191 @@
+@import 'base.less';
+@import 'overrides/bootstrap.less';
+@import 'overrides/fullcalendar.less';
+@import 'overrides/sortable.less';
+
+.more-info {
+	padding: 15px 15px;
+	margin-top: 15px;
+	margin-left: 16.66666667%;
+	box-sizing: border-box;
+}
+
+.navbar-inverse .navbar-brand.active {
+	color: @navbar-inverse-brand-hover-color;
+	background-color: @navbar-inverse-link-active-bg;
+}
+
+/* bookings index */
+
+/*
+const STATUS_REQUEST = 0;
+const STATUS_CHECKED_OK = 10;
+const STATUS_CHECKED_NOK = 11;
+const STATUS_BOOKED_OK = 20;
+const STATUS_BOOKED_NOK = 21;
+const STATUS_CANCEL_REQUEST=30;
+const STATUS_CANCELLED = 31;
+*/
+.status {
+	margin-right:12px;float:left;width:25px;height:24px;
+}
+
+.status-0 { }
+.status-11 {
+	// STATUS_CHECKED_NOK
+	background:
+		url(data:image/gif;base64,R0lGODlhGwAbAKUtAL46SsI8TME9TcI+TcVBUMdDU8hGVcxIWNBMXNNPX8RUYdNTYtdTZtlVaOBcb9RkceRidOZideVjduZkduhoetxsfO1pfO1rfu5sgvJwhvNxh9KAivd1i+l7i/l3ivt5j9uJk9ePl9mRmeWVoOycqOqiruykruK4veW7wO7EyvDGzPDk5fPn6f///////////////////////////////////////////////////////////////////////////yH+GkNyZWF0ZWQgd2l0aCBHSU1QIG9uIGEgTWFjACH5BAEKAD8ALAAAAAAbABsAAAaNwJ9wSCwaj8ikcslsOp/QqHSaVJE6lA5JJWWZLhrPx6O5mFjQEobDbnMwpWdKkqnb7ZKUcxSx+P9/ESNOFRATh4iIEBVOCw6PkJEOC04PDA2YmZkMD04gCAmhoqIIIE4oBgeqq6sGKE8iBAWztAUEIlArIQIBA74BAiErUicbCgAKGydUzM3Oz9DR0ktBADs=)
+		no-repeat
+		center center;
+}
+.status-10 {
+	// STATUS_CHECKED_OK
+	background:
+		url(data:image/gif;base64,R0lGODlhGwAbAKUtAEO2OEe5O0a6Oka7OUe/O0jDO0rFPVbBS0zJP1DNQ1PQRlfQSlrUSmTRWVzWTH7OdmHeUG/ZYWfhV4vTg2jjV2fkVofXf2nkWI3VhWzmXG7rXW/rX33nb3TsYJPhiXjwZHjxZbDdq3r2Zprpj6HnlXn4aLPgrqHpl376arzqtr7suNnp19zs2v///////////////////////////////////////////////////////////////////////////yH+GkNyZWF0ZWQgd2l0aCBHSU1QIG9uIGEgTWFjACH5BAEKAD8ALAAAAAAbABsAAAaNwJ9wSCwaj8ikcslsOp/QqHSaVI04Gc5IJWWdNqASqgTanFhQUkfEbos6pGeK8qnb7ZSU01PR+P9/FR5OERIXh4iIEhFOCxCPkJEQC04NDA6YmZkMDU4WCQqhoqIJFk4mBgiqq6sGJk8YBAWztAUEGFArEwIDAb4DAhMrUiEPBwAHDyFUzM3Oz9DR0ktBADs=)
+		no-repeat
+		center center;
+}
+
+.status-20 {
+	// STATUS_BOOKED_OK
+	.glyphicon;
+	.glyphicon-ok;
+	color: green;
+	padding-left: 7px;
+	padding-top: 3px;
+}
+.status-21 {
+	// STATUS_BOOKED_NOK
+	.glyphicon;
+	.glyphicon-remove;
+	color: red;
+	padding-left: 7px;
+	padding-top: 3px;
+}
+.status-30, .status-31 {
+	// STATUS_CANCEL_REQUEST
+	.glyphicon;
+	.glyphicon-ban-circle;
+	color: red;
+	padding-left: 7px;
+	padding-top: 3px;
+}
+.status-31 {
+	// STATUS_CANCELLED
+	.glyphicon;
+	.glyphicon-ban-circle;
+	color: gray;
+	padding-left: 7px;
+	padding-top: 3px;
+}
+
+
+
+th.r, td.r {
+	text-align:right;
+	padding-right:19px!important;
+}
+th.c, td.c {
+	text-align:center;
+}
+
+.help-block {
+	.alert;
+	.alert-danger;
+	padding: 6px;
+}
+
+.legend li {
+	min-height: 23px;
+}
+
+.flash-messages {
+	.alert;
+	.alert-danger;
+	margin-top:15px;
+}
+
+[data-provide="sortable"] .badge {
+	float:right;
+	margin-right: 6px;
+	min-width: 27px;
+}[data-provide="sortable"] .location {
+	float:right;
+	margin-right: 6px;
+	min-width: 27px;
+}
+
+.whois {
+	font-size: 11px;
+	line-height: 1.42857143;
+	vertical-align: text-bottom;
+	margin-right: 10px;
+}
+
+/* typeahead */
+.twitter-typeahead {
+	display: block!important;
+}
+
+typeahead,
+.tt-query,
+.tt-hint {
+	line-height: 30px;
+	outline: none;
+}
+
+.typeahead {
+	background-color: #fff;
+}
+
+.typeahead:focus {
+	border: 2px solid #0097cf;
+}
+
+.tt-query {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+	color: #999;
+}
+
+.tt-dropdown-menu {
+	width: 422px;
+	margin-top: 30px;
+	padding: 8px 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+	padding: 3px 20px;
+	font-size: 18px;
+	line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor {
+	color: #fff;
+	background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+	margin: 0;
+}
+
+.disabled-link, .disabled-link:hover {
+	pointer-events: none;
+	cursor: not-allowed;
+	color: gray;
+	text-decoration: none;
+}

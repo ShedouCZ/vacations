@@ -1,0 +1,24 @@
+// MODULE: Sortable
+[data-provide="sortable"] {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+[data-provide="sortable"] li i.fa {
+	color: #CCC;
+}
+[data-provide="sortable"] li {
+	border: 1px solid #CCC;
+	position: relative;
+	display: block;
+	padding: @nav-link-padding;
+	cursor: move;
+}
+li.sortable-placeholder {
+	border: 1px dashed #CCC;
+	background: none;
+	height:42px;
+}

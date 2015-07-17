@@ -191,7 +191,7 @@ module.exports = function(grunt) {
 					compress: true
 				},
 				files: {
-					'dist/bs-custom.css':'css/overrides/bs-custom.less',
+					'dist/bs-custom.css':'css/vacations.less',
 				}
 			}
 		},

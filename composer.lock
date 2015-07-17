@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "56148d89ac4b7343e6bf61ffe9a61dab",
+    "hash": "7d2b5254fa0446e5c3309dbccfc4f09e",
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "2.6.8",
+            "version": "2.6.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "c037e04ace30f07d0b691e13fcf556d4570b4b88"
+                "reference": "8717352f15c6c183f1fde9bd25dfd25b8a6fb810"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c037e04ace30f07d0b691e13fcf556d4570b4b88",
-                "reference": "c037e04ace30f07d0b691e13fcf556d4570b4b88",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/8717352f15c6c183f1fde9bd25dfd25b8a6fb810",
+                "reference": "8717352f15c6c183f1fde9bd25dfd25b8a6fb810",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-06-30 02:35:55"
+            "time": "2015-07-16 01:22:16"
         },
         {
             "name": "ceeram/clear_cache",
@@ -281,6 +281,36 @@
             "time": "2015-07-01 08:55:28"
         },
         {
+            "name": "ptica/auth-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ptica/AuthHelper.git",
+                "reference": "b01808b439fbade764a34de34a53ab9499a018d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ptica/AuthHelper/zipball/b01808b439fbade764a34de34a53ab9499a018d2",
+                "reference": "b01808b439fbade764a34de34a53ab9499a018d2",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.2.8"
+            },
+            "type": "cakephp-plugin",
+            "license": [
+                "MIT"
+            ],
+            "description": "AuthHelper for CakePHP 2.x",
+            "homepage": "http://github.com/ptica/AuthHelper",
+            "support": {
+                "source": "https://github.com/ptica/AuthHelper/tree/master",
+                "issues": "https://github.com/ptica/AuthHelper/issues"
+            },
+            "time": "2014-10-23 12:21:30"
+        },
+        {
             "name": "webtechnick/configuration",
             "version": "dev-bootstrap_theme",
             "source": {
@@ -324,7 +354,8 @@
     "stability-flags": {
         "ptica/bootstrapcake": 20,
         "webtechnick/configuration": 20,
-        "hugodias/cakegallery": 20
+        "hugodias/cakegallery": 20,
+        "ptica/auth-helper": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

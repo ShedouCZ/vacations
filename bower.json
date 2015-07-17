@@ -1,10 +1,10 @@
 {
-  "name": "vacations-bower",
+  "name": "karolinum-bower",
   "version": "0.0.1",
   "authors": [
-    "Vojta Lanka <vojta.lanka@gmail.com>"
+    "Jan Ptacek <jan.ptacek@gmail.com>"
   ],
-  "license": "Commercial",
+  "license": "MIT",
   "private": true,
   "ignore": [
     "**/.*",
@@ -14,25 +14,19 @@
     "tests"
   ],
   "dependencies": {
-    "moment": "~2.9.0",
-    "moment-timezone": "~0.3.1",
-    "eonasdan-bootstrap-datetimepicker": "~4.7.14",
-    "bootstrap": "~3.3.4",
-    "defunctr": "djinncreative/defunctr",
-    "validator-js": "~3.38.0",
-    "jquery-serialize-object": "~2.4.5",
-    "fullcalendar": "~2.3.1",
-    "fullcalendar-history": "ptica/fullcalendar-history",
+    "bootstrap": "~3.2.0",
+    "fullcalendar": "~2.1.0",
     "jquery.cookie": "~1.4.1",
-    "moment-range": "~1.0.7",
-    "bootbox.js": "makeusabrew/bootbox#~4.4.0",
-    "bootstrap-validator": "master",
-    "H5F": "ryanseddon/H5F#~1.1.1",
-    "es5-shim": "es-shims/es5-shim#~4.1.1",
-    "hammerjs": "~2.0.4",
-    "jquery-hammerjs": "~2.0.0",
-    "summernote": "~0.6.7",
-    "Sortable": "~1.2.0",
-    "Jed": "SlexAxton/Jed#~0.5.0"
+    "eonasdan-bootstrap-datetimepicker": "~3.1.2",
+    "blueimp-file-upload": "~9.7.1",
+    "Jed": "SlexAxton/Jed",
+    "fluidbox": "~1.3.5",
+    "tinycolorpicker": "ptica/tinycolorpicker#master",
+    "html.sortable": "~0.1.6",
+    "bootstrap3-wysihtml5-bower": "~0.3.3",
+    "fullcalendar-history": "ptica/fullcalendar-history",
+    "notes": "ptica/notes",
+    "momentjs-business": "leonardosantos/momentjs-business",
+    "typeahead.js": "~0.10.5"
   }
 }

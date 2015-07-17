@@ -1,0 +1,113 @@
+body {
+	padding: 40px 0 0 0;
+	background: url(cunistyle/img/bgn.jpg) center top;
+	position: relative;
+}
+body > .contentHolder {
+	background: #FFF;
+	padding-bottom: 40px;
+}
+
+.navbar { border:0; font-family: 'Open Sans', sans-serif;}
+.navbar .navbar-nav>li>a { text-transform: uppercase; font-size: 13px; }
+.navbar .navbar-nav.navbar-right>li>a { text-transform: none; }
+
+.navbar-brand {
+	padding: 9px 15px;
+}
+
+h1, h2, h3 {font-family: 'Open Sans', sans-serif;}
+
+
+
+a.scrollToTop {
+	display: block;
+	width: 35px;
+	height: 35px;
+	background: url(cunistyle/img/scroll-to-top.jpg);
+	position: absolute;
+	cursor: pointer;
+	-webkit-animation: 0.3s;
+	animation: 0.3s;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+a.scrollToTop.fix {
+	position: fixed;
+	top: auto;
+	right: auto;
+}
+
+.footerHolder {
+height: 35px;
+background: #fff;
+border-top: 2px #cc2c32 solid;
+border-bottom: 2px #cc2c32 solid;
+margin-bottom: 140px;
+font-family: 'Open Sans', sans-serif;
+}
+.footerHolder .footer {
+position: relative;
+padding-top: 5px;
+}
+.footerHolder .footer .copyright {
+margin-top:1px;
+font-size: 0.929em;
+}
+.footerHolder .footer .navRight ul {
+padding-left: 0px;
+margin-left: 0px;
+list-style-type: none;
+padding-bottom: 0px;
+margin-bottom: 0px;
+}
+.footerHolder .footer .navRight ul li {
+display: inline-block;
+}
+.footerHolder .footer .navRight ul li:after {
+content: "|";
+color: #a0a0a0;
+margin-left: 4px;
+}
+.footerHolder .footer .navRight ul li:last-of-type:after {
+content: none;
+}
+.footerHolder .footer .navRight ul li a {
+font-size: 0.929em;
+color: #000;
+text-decoration: none;
+}
+.footerHolder .footer .navRight ul li a:hover {
+text-decoration: underline;
+}
+.footerHolder .footer .scrollToTopHelper {
+position: absolute;
+top: 0px;
+right: 0px;
+height: 1px;
+width: 1px;
+}
+.right {
+float: right;
+}
+.left {
+float: left;
+}
+
+
+
+input[type="submit"].cuni:hover {
+background: #A22328;
+color: white;
+}
+input[type="submit"].cuni {
+width: 119px;
+height: 30px;
+color: white;
+font-size: 1.000em;
+text-transform: uppercase;
+background-color: #CC2845;
+border: none;
+}

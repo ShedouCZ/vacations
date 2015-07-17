@@ -16,6 +16,7 @@
  CakePlugin::load(array(
  	'BootstrapCake',
  	'Bs3Helpers',
+    'AuthHelper',
  	//'Configuration',
  	'ClearCache',
  	//'RangeParser',

@@ -1,0 +1,74 @@
+/*
+const STATUS_REQUEST = 0;
+const STATUS_CHECKED_OK = 10;
+const STATUS_CHECKED_NOK = 11;
+const STATUS_BOOKED_OK = 20;
+const STATUS_BOOKED_NOK = 21;
+const STATUS_CANCEL_REQUEST=30;
+const STATUS_CANCELLED = 31;
+*/
+
+.fc-time, .fc-time span {
+	white-space: normal;
+}
+
+.any-fc-status {
+	content: "";
+	float:right;
+	margin-right: 1px;
+	margin-top: 1px;
+	display: block;
+	border: 1px solid white;
+	border-radius: 5px;
+	width: 7px;
+	height:7px;
+}
+
+.fc-event.st-10 {
+	&:before {
+		.any-fc-status;
+		background-color: green;
+	}
+}
+.fc-event.st-11 {
+	&:before {
+		.any-fc-status;
+		background-color: red;
+	}
+}
+
+.booked-fc-status {
+	.any-fc-status;
+	font-family: 'Glyphicons Halflings';
+	content: "\e013";
+	background-color:white;
+	width:7px;
+	height:7px;
+	line-height:7px;
+	font-size:7px;
+}
+
+.fc-event.st-20 {
+	&:before {
+		.booked-fc-status;
+		color: green;
+	}
+}
+.fc-event.st-21 {
+	&:before {
+		.booked-fc-status;
+		content: "\e014";
+		color: red;
+	}
+}
+.fc-event.st-31, .fc-event.st-30 {
+	&:before {
+		.booked-fc-status;
+		content: "\e090";
+		color: red;
+	}
+}
+
+.fc-event {
+	min-height: 13px;
+}
