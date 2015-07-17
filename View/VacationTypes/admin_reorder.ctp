@@ -19,9 +19,9 @@
 		<div class="col-md-9">
 			<div id="sortableVacationTypes" class="list-group" data-reorder-url="/admin/vacationTypes/reorder">
 				<?php foreach ($vacationTypes as $item) {?>
-					<div class="list-group-item" data-item-id="<?php echo h($item['VacationType']['id']); ?>">
-						<span class="glyphicon glyphicon-move" aria-hidden="true"></span>
-						<div style="width:25px;height:24px;display:inline-block; background-color:<?php echo h($item['VacationType']['color']); ?>"></div>
+					<div class="list-group-item" data-item-id="<?php echo h($item['VacationType']['id']); ?>" style="line-height:25px;">
+						<span class="glyphicon glyphicon-move" aria-hidden="true" style="top:2px;margin-right:3px;"></span>
+						<div style="vertical-align:top;width:25px;height:24px;display:inline-block; background-color:<?php echo h($item['VacationType']['color']); ?>"></div>
 						<?php echo $this->Html->link($item['VacationType']['title'], array('action' => 'index', $item['VacationType']['id'])); ?>
 					</div>
 				<?php } ?>

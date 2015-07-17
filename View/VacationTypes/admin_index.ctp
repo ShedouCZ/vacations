@@ -20,16 +20,16 @@
 			<table cellpadding="0" cellspacing="0" class="table table-striped">
 				<thead>
 					<tr>
+						<th style="width:40px"><?php echo $this->Paginator->sort('color', ' '); ?></th>
 						<th><?php echo $this->Paginator->sort('title'); ?></th>
-						<th><?php echo $this->Paginator->sort('color'); ?></th>
-						<th class="actions"></th>
+						<th style="width:50px" class="actions"></th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php foreach ($vacationTypes as $vacationType) { ?>
 					<tr>
-						<td><?php echo h($vacationType['VacationType']['title']); ?></td>
 						<td><div style="width:25px;height:24px; background-color:<?php echo h($vacationType['VacationType']['color']); ?>"></div></td>
+						<td><?php echo h($vacationType['VacationType']['title']); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $vacationType['VacationType']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $vacationType['VacationType']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $vacationType['VacationType']['id'])); ?>

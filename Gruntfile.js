@@ -105,6 +105,7 @@ module.exports = function(grunt) {
 					'js/modernizr.custom.svg.js',   // // brings modernizr for defunctr
 					'Vendor/defunctr/src/defunctr.js',
 					'Vendor/moment-range/lib/moment-range.js',
+					'js/scroll-to-top.js',
 					'js/app.js',
 				],
 				dest: 'webroot/js/site-pre.js',
