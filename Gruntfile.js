@@ -100,6 +100,7 @@ module.exports = function(grunt) {
 					//'Vendor/es5-shim/es5-sham.js',
 					'Vendor/jquery/dist/jquery.js',
 					'Vendor/moment/moment.js',
+					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.js',
 					//'js/modernizr.preserve3d.js', // brings modernizr for defunctr
 					'js/modernizr.custom.svg.js',   // // brings modernizr for defunctr
 					'Vendor/defunctr/src/defunctr.js',
@@ -122,6 +123,7 @@ module.exports = function(grunt) {
 					'Vendor/bootstrap/dist/js/bootstrap.js',
 					'Vendor/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
 					//'dist/jsx-combined.js',
+					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.css',
 					'Vendor/jquery-serialize-object/jquery.serialize-object.js',
 					'Vendor/H5F/h5f.min.js', // ie9 validation library
 					'Vendor/bootstrap-validator/js/validator.js',

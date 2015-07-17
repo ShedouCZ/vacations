@@ -24,7 +24,7 @@
 					<?php echo $this->Form->input('title', array('class'=>'form-control', 'placeholder'=>__('Title')));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('color', array('class'=>'form-control', 'placeholder'=>__('Color')));?>
+					<?php echo $this->Form->input('color', array('class'=>'form-control', 'placeholder' => __('Color'), 'data-provide'=>'colorpicker')); ?>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
