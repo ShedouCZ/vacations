@@ -22,4 +22,4 @@
         </div>
     </div>
 </div>
-<a class="scrollToTop" style="bottom: 1px; left: 1345px;"></a>
+<a class="scrollToTop" style="bottom: 1px; left: 1552px;"></a>
