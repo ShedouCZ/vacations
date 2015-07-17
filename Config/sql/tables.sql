@@ -23,13 +23,13 @@ CREATE TABLE `vacations` (
   `title` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
-  `vacation_types_id` int(11) NOT NULL,
+  `vacation_type_id` int(11) NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  KEY `vacation_types_id` (`vacation_types_id`),
+  KEY `vacation_type_id` (`vacation_type_id`),
   CONSTRAINT `vacations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `vacations_ibfk_2` FOREIGN KEY (`vacation_types_id`) REFERENCES `vacation_types` (`id`) ON DELETE CASCADE
+  CONSTRAINT `vacations_ibfk_2` FOREIGN KEY (`vacation_type_id`) REFERENCES `vacation_types` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
