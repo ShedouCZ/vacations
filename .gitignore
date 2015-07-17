@@ -1,1 +1,6 @@
-webroot/fonts/
+webroot/fonts
+webroot/css
+webroot/js
+tmp
+dist
+node_modules
