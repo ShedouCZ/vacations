@@ -79,7 +79,7 @@
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->Element('navigation'); ?>
 
-			<div class="content container">
+			<div class="content container contentHolder">
 				<?php echo $this->fetch('content'); ?>
 			</div>
 
