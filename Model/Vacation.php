@@ -14,9 +14,9 @@ class Vacation extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	public $belongsTo = array(
-		'VacationTypes' => array(
-			'className' => 'VacationTypes',
-			'foreignKey' => 'vacation_types_id',
+		'VacationType' => array(
+			'className' => 'VacationType',
+			'foreignKey' => 'vacation_type_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
