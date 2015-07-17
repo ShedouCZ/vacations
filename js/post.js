@@ -25,3 +25,24 @@
 	$('input[data-provide=colorpicker]').tinycolorpicker({
 		remover: 'remove'
 	});
+	
+	// MODULE sortable
+	$('.list-group').each(function (i,e) {
+	    var id = e.id;
+	    var $e = $(e);
+	    Sortable.create(document.getElementById(id), {
+	        handle: '.glyphicon-move',
+	        animation: 150,
+	        // dragging ended
+	        onEnd: function (/**Event*/ e) {
+	            var data = $e.find('[data-item-id]').map(function (i,v) {
+	                return {
+	                    'id': $(v).data('item-id'),
+	                    'ord': i
+	                };
+	            }).toArray();
+	            var url = $e.data('reorder-url') || window.location.href;
+	            $.post(url, {data:data});
+	        }
+	    });
+	});
