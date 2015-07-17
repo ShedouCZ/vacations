@@ -78,13 +78,12 @@
 			<?php //echo $this->Element('header'); ?>
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->Element('navigation'); ?>
-			<?php if ($this->request->here == '/') echo $this->Element('carousel'); ?>
 
 			<div class="content container">
 				<?php echo $this->fetch('content'); ?>
 			</div>
 
-			<?php if (!Configure::read('Routing.admin')) echo $this->element('footer'); ?>
+			<?php echo $this->Element('footer'); ?>
 
 	<script src="<?php echo "/js/site-post.js?$version"; ?>" type="text/javascript"></script>
 </body>

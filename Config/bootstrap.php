@@ -110,3 +110,25 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+Configure::write('Bs3.Form.styles', array(
+	'horizontal' => array(
+		'formDefaults' => array(
+			//'submitDiv' => 'col-sm-10 col-sm-offset-2'
+		),
+		'inputDefaults' => array(
+			'label' => array(
+				'class' => 'col-sm-2 control-label'
+			),
+			'wrap' => 'col-sm-7 input-group',
+			'div' => null,
+		)
+	),
+	'inline' => array(
+		'inputDefaults' => array(
+			'label' => array(
+				'class' => 'sr-only'
+			),
+		)
+	)
+));

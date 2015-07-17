@@ -160,7 +160,7 @@ module.exports = function(grunt) {
 					'css/overrides/eonasdan-datetimepicker-bs.css',
 					'dist/bs-custom.css',
 					'Vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-					'Vendor/bootstrap/dist/css/bootstrap.css',
+					//'Vendor/bootstrap/dist/css/bootstrap.css',
 					'css/bootstrap-validation.css',
 					'Vendor/font-awesome/css/font-awesome.css',
 					'css/*.css'
