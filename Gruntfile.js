@@ -123,7 +123,6 @@ module.exports = function(grunt) {
 					'Vendor/bootstrap/dist/js/bootstrap.js',
 					'Vendor/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
 					//'dist/jsx-combined.js',
-					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.css',
 					'Vendor/jquery-serialize-object/jquery.serialize-object.js',
 					'Vendor/H5F/h5f.min.js', // ie9 validation library
 					'Vendor/bootstrap-validator/js/validator.js',
@@ -162,6 +161,7 @@ module.exports = function(grunt) {
 					'css/overrides/eonasdan-datetimepicker-bs.css',
 					'dist/bs-custom.css',
 					'Vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
+					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.css',
 					//'Vendor/bootstrap/dist/css/bootstrap.css',
 					'css/bootstrap-validation.css',
 					'Vendor/font-awesome/css/font-awesome.css',
