@@ -21,7 +21,9 @@
 				<?php foreach ($vacationTypes as $item) {?>
 					<div class="list-group-item" data-item-id="<?php echo h($item['VacationType']['id']); ?>">
 						<span class="glyphicon glyphicon-move" aria-hidden="true"></span>
-						<?php echo $this->Html->link($item['VacationType']['title'], array('action' => 'index', $item['VacationType']['id'])); ?>					</div>
+						<div style="width:25px;height:24px;display:inline-block; background-color:<?php echo h($item['VacationType']['color']); ?>"></div>
+						<?php echo $this->Html->link($item['VacationType']['title'], array('action' => 'index', $item['VacationType']['id'])); ?>
+					</div>
 				<?php } ?>
 			</div>
 		</div> <!-- end col md 9 -->
