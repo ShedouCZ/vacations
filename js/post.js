@@ -23,5 +23,5 @@
 
     // MODULE: colorpicker
 	$('input[data-provide=colorpicker]').tinycolorpicker({
-		remover: App.i18n.gettext('remove')
+		remover: 'remove'
 	});
