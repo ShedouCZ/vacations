@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12 footer">
             <div class="copyright left">
-                © <?php echo date('Y');?> Univerzita Karlova v Praze
+                © <?php echo date('Y');?> ÚFAL, Univerzita Karlova v Praze
             </div>
             <div class="right">
                 <nav class="navRight">
