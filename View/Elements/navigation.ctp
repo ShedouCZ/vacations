@@ -11,7 +11,7 @@
 						$active = 'active';
 					}
 				?>
-				<a class="navbar-brand <?php echo @$active?>" href="<?php echo Router::url('/'); ?>"><i class="fa fa-home"></i> <?php echo __("Reservations in Karolinum"); ?></a>
+				<a class="navbar-brand <?php echo @$active?>" href="<?php echo Router::url('/'); ?>"><i class="fa fa-home"></i> <?php echo __("Vacations"); ?></a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">

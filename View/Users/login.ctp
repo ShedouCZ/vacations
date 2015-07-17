@@ -5,7 +5,6 @@
 }
 
 </style>
-
 <div class="col-md-12">
 	<div class="col-md-8 pull-right" style="margin-top:120px; text-align: right;">
 		<?php echo $this->Html->image('loginImg.png', array("style"=>"width:630px")); ?>
