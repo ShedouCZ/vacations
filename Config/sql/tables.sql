@@ -16,6 +16,8 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `users` (`id`, `username`, `password`, `mail`, `created`, `modified`) VALUES
+(1,	'admin',	'$2a$10$yNy56Iy3H4MLPtPt6TnJIuOyYK3ZMg1TbatX.AjuGNWF58o/Dt7Du',	NULL,	'2015-07-17 10:41:58',	'2015-07-17 10:41:58');
 
 DROP TABLE IF EXISTS `vacations`;
 CREATE TABLE `vacations` (
@@ -33,7 +35,6 @@ CREATE TABLE `vacations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
-
 DROP TABLE IF EXISTS `vacation_types`;
 CREATE TABLE `vacation_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -43,5 +44,11 @@ CREATE TABLE `vacation_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+INSERT INTO `vacation_types` (`id`, `title`, `ord`, `color`) VALUES
+(2,	'Služební cesta',	99999999,	'#043965'),
+(3,	'Dovolená',	99999999,	'#519600'),
+(4,	'Konference',	99999999,	'#F0C100'),
+(5,	'Stáž',	99999999,	'#F74F04'),
+(6,	'Mateřská',	99999999,	'#96002D');
 
--- 2015-07-15 08:40:05
+-- 2015-07-17 09:22:53
