@@ -17,6 +17,10 @@
         },
         {
             "type": "vcs",
+            "url": "https://github.com/ptica/LdapAuth"
+        },
+        {
+            "type": "vcs",
             "url": "https://github.com/ptica/AuthHelper"
         },
         {
@@ -35,6 +39,7 @@
         "ceeram/clear_cache": "~1.1",
         "webtechnick/configuration": "dev-bootstrap_theme",
         "hugodias/cakegallery": "dev-locale",
+        "ptica/LdapAuth": "dev-master",
         "ptica/auth-helper" : "dev-master"
     },
     "config": {

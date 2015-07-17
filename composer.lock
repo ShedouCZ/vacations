@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7d2b5254fa0446e5c3309dbccfc4f09e",
+    "hash": "0e20b4e3898da92cb4c070a887c5084c",
     "packages": [
         {
             "name": "cakephp/cakephp",
@@ -281,6 +281,31 @@
             "time": "2015-07-01 08:55:28"
         },
         {
+            "name": "ptica/LdapAuth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ptica/LdapAuth.git",
+                "reference": "b2de2ba5f2aced7cd9b208ee83faece6f0ed9d4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ptica/LdapAuth/zipball/b2de2ba5f2aced7cd9b208ee83faece6f0ed9d4d",
+                "reference": "b2de2ba5f2aced7cd9b208ee83faece6f0ed9d4d",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "2.6.*",
+                "composer/installers": "~1.0"
+            },
+            "type": "cakephp-plugin",
+            "support": {
+                "source": "https://github.com/ptica/LdapAuth/tree/master",
+                "issues": "https://github.com/ptica/LdapAuth/issues"
+            },
+            "time": "2015-07-17 16:13:43"
+        },
+        {
             "name": "ptica/auth-helper",
             "version": "dev-master",
             "source": {
@@ -355,6 +380,7 @@
         "ptica/bootstrapcake": 20,
         "webtechnick/configuration": 20,
         "hugodias/cakegallery": 20,
+        "ptica/ldapauth": 20,
         "ptica/auth-helper": 20
     },
     "prefer-stable": false,
