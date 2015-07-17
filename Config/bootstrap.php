@@ -13,20 +13,21 @@
  * @since         CakePHP(tm) v 0.10.8.2117
  */
 
- CakePlugin::load(array(
- 	'BootstrapCake',
- 	'Bs3Helpers',
-    'AuthHelper',
- 	//'Configuration',
- 	'ClearCache',
- 	//'RangeParser',
- 	'Gallery' => array(
- 		'bootstrap' => true,
- 		'routes' => true
- 	),
- 	//'Localized',
- 	//'DebugKit',
- ));
+CakePlugin::load(array(
+	'LdapAuth',
+	'BootstrapCake',
+	'Bs3Helpers',
+	'AuthHelper',
+	//'Configuration',
+	'ClearCache',
+	//'RangeParser',
+	'Gallery' => array(
+		'bootstrap' => true,
+		'routes' => true
+	),
+	//'Localized',
+	//'DebugKit',
+));
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
@@ -132,3 +133,10 @@ Configure::write('Bs3.Form.styles', array(
 		)
 	)
 ));
+
+// load ldap settings
+Configure::load('ldap/ldap');
+
+// css version bump string
+Configure::load('version');
+

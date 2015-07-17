@@ -5,7 +5,7 @@ class UsersController extends AppController {
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allow('add', 'logout');
+		$this->Auth->allow('add', 'logout', 'import');
 	}
 
 	public function login() {
@@ -45,6 +45,19 @@ class UsersController extends AppController {
 				__('The user could not be saved. Please, try again.')
 			);
 		}
+	}
+	
+	public function import() {
+		$methods = $this->Auth->constructAuthenticate();
+		
+		foreach ($methods as $method) {
+			if (get_class($method) == 'LdapAuthenticate') {
+				$method->import_users();
+				echo 'OK';
+				exit();
+			}
+		}
+		exit();
 	}
 
 	public function edit($id = null) {

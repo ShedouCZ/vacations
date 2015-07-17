@@ -5,15 +5,29 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `employee_types`;
+CREATE TABLE `employee_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `ord` int(11) NOT NULL DEFAULT '99999999',
+  `color` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
   `mail` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
+  `givenname` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
+  `sn` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
+  `employee_type_id` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `employee_type_id` (`employee_type_id`),
+  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`employee_type_id`) REFERENCES `employee_types` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 INSERT INTO `users` (`id`, `username`, `password`, `mail`, `created`, `modified`) VALUES

@@ -39,9 +39,10 @@ class AppController extends Controller {
          * AUTHORIZATION
          */
         $this->Auth->authenticate = array(
-            'Form' => array(
+            'LdapAuth.Ldap' => Configure::read('ldap'),
+            /*'Form' => array(
                 'passwordHasher' => 'Blowfish'
-            )
+            )*/
         );
         $this->Auth->loginAction = array(
             'controller' => 'users',
@@ -50,15 +51,15 @@ class AppController extends Controller {
             'admin' => false
         );
         $this->Auth->loginRedirect = array(
-            'controller' => 'quotes',
+            'controller' => 'vacations',
             'action' => 'index',
-            'home',
             'admin' => true
         );
         $this->Auth->logoutRedirect = array(
-            'controller' => 'pages',
-            'action' => 'display',
-            'home'
+            'controller' => 'users',
+            'action' => 'login',
+            'plugin' => false,
+            'admin' => false
         );
 
         $this->Auth->allow('index', 'view', 'display', 'get');
