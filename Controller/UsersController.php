@@ -2,6 +2,10 @@
 App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
+	public $paginate = array(
+		'limit' => 120
+	);
+	
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -21,7 +25,8 @@ class UsersController extends AppController {
 		return $this->redirect($this->Auth->logout());
 	}
 
-	public function index() {
+	public function admin_index() {
+		$this->Paginator->settings = $this->paginate;
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
@@ -34,7 +39,7 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->read(null, $id));
 	}
 
-	public function add() {
+	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
@@ -60,7 +65,7 @@ class UsersController extends AppController {
 		exit();
 	}
 
-	public function edit($id = null) {
+	public function admin_edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
@@ -79,7 +84,7 @@ class UsersController extends AppController {
 		}
 	}
 
-	public function delete($id = null) {
+	public function admin_delete($id = null) {
 		$this->request->allowMethod('post');
 
 		$this->User->id = $id;
