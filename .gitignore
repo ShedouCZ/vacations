@@ -4,3 +4,4 @@ webroot/js
 tmp
 dist
 node_modules
+Config/Ldap/ldap.php
