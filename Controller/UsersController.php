@@ -24,6 +24,13 @@ class UsersController extends AppController {
 	public function logout() {
 		return $this->redirect($this->Auth->logout());
 	}
+	
+	public function admin_types() {
+		$users = $this->User->find('all');
+		$users_by_type = Hash::combine($users, '{n}.User.id', '{n}.User', '{n}.User.employee_type_id');
+		// beware: items with type_id == null will gather under index of '0'
+		$this->set(compact('users_by_type'));
+	}
 
 	public function admin_index() {
 		$this->Paginator->settings = $this->paginate;
