@@ -46,3 +46,27 @@
 	        }
 	    });
 	});
+	
+	// MODULE sortable - employee types
+	var onAdd = function (/**Event*/evt) {
+		var user_id = $(evt.item).data('item-id');
+		var type_id = $(evt.item).closest('.employee_type_box').data('type-id');
+		var data = {
+			'id': user_id,
+			'employee_type_id': type_id
+		};
+		var url = window.location.href;
+		$.post(url, {data:data});
+	};
+	$('.employee_type_box').each(function(i,e) { 
+		Sortable.create(e, {
+			animation: 150,
+			draggable: 'li',
+			group: {
+				name: 'type_id',
+				pull: true,
+				put: true
+			},
+			onAdd: onAdd
+		});
+	});

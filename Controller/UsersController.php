@@ -29,12 +29,17 @@ class UsersController extends AppController {
 	}
 
 	public function admin_types() {
-		$users = $this->User->find('all');
-		$users_by_type = Hash::combine($users, '{n}.User.id', '{n}.User', '{n}.User.employee_type_id');
-		$types = $this->EmployeeType->find('list');
-		$types[0] = 'Nenastaveno';
-		// beware: items with type_id == null will gather under index of '0'
-		$this->set(compact(array('users_by_type','types')));
+		if ($this->request->is('post')) {
+			$this->User->save($this->request->data);
+			exit();
+		} else {
+			$users = $this->User->find('all');
+			$users_by_type = Hash::combine($users, '{n}.User.id', '{n}.User', '{n}.User.employee_type_id');
+			$types = $this->EmployeeType->find('list');
+			$types = array('Nenastaveno') + $types;
+			// beware: items with type_id == null will gather under index of '0'
+			$this->set(compact(array('users_by_type','types')));
+		}
 	}
 
 	public function admin_index() {
