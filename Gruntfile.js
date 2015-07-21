@@ -161,6 +161,7 @@ module.exports = function(grunt) {
 					// datetimepicker and its dependecies on bootstrap
 					'css/overrides/eonasdan-datetimepicker-bs.css',
 					'dist/bs-custom.css',
+					'css/sortable_costume.css',
 					'Vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
 					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.css',
 					//'Vendor/bootstrap/dist/css/bootstrap.css',

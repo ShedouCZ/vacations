@@ -2,10 +2,13 @@
 App::uses('AppController', 'Controller');
 
 class UsersController extends AppController {
+
+	public $uses = array('User', 'EmployeeType');
+
 	public $paginate = array(
 		'limit' => 120
 	);
-	
+
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -24,12 +27,14 @@ class UsersController extends AppController {
 	public function logout() {
 		return $this->redirect($this->Auth->logout());
 	}
-	
+
 	public function admin_types() {
 		$users = $this->User->find('all');
 		$users_by_type = Hash::combine($users, '{n}.User.id', '{n}.User', '{n}.User.employee_type_id');
+		$types = $this->EmployeeType->find('list');
+		$types[0] = 'Nenastaveno';
 		// beware: items with type_id == null will gather under index of '0'
-		$this->set(compact('users_by_type'));
+		$this->set(compact(array('users_by_type','types')));
 	}
 
 	public function admin_index() {
@@ -58,10 +63,10 @@ class UsersController extends AppController {
 			);
 		}
 	}
-	
+
 	public function import() {
 		$methods = $this->Auth->constructAuthenticate();
-		
+
 		foreach ($methods as $method) {
 			if (get_class($method) == 'LdapAuthenticate') {
 				$method->import_users();
