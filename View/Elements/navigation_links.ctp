@@ -5,7 +5,7 @@
 		//'Confirmations' => '/confirmations',
 		//'Booking' => '/bookings',
 		'Vacation Types'  => '/admin/vacation_types',
-		'Employee Types'  => '/admin/employee_types',
+		'Employee Types'  => '/admin/employee_types/types',
 		'Users' => '/admin/users',
 		'Roles' => '/admin/roles',
 		//'Log' => '/log',

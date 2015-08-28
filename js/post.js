@@ -70,3 +70,22 @@
 			onAdd: onAdd
 		});
 	});
+	$('.employee_type_box').on('click', 'li', function () {
+		var $li = $(this);
+		var user_id = $li.data('item-id');
+		var $from = $li.closest('.employee_type_box');
+		var type_id = $from.data('type-id');
+		type_id = type_id + 1;
+		type_id = type_id % $('.employee_type_box').length;
+		$to = $('#employee_type_' + type_id);
+		$li.hide(100, function () {
+			$to.prepend($li);
+			$li.show(100);
+		});
+		var data = {
+			'id': user_id,
+			'employee_type_id': type_id == 0 ? null : type_id
+		};
+		var url = window.location.href;
+		$.post(url, {data:data});
+	});
