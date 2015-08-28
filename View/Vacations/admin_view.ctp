@@ -59,7 +59,7 @@
 					<tr>
 								<th><?php echo __('Vacation Types'); ?></th>
 								<td>
-			<?php echo $this->Html->link($vacation['VacationTypes']['title'], array('controller' => 'vacation_types', 'action' => 'view', $vacation['VacationTypes']['id'])); ?>
+			<?php echo $this->Html->link($vacation['VacationType']['title'], array('controller' => 'vacation_types', 'action' => 'view', $vacation['VacationType']['id'])); ?>
 			&nbsp;
 		</td>
 					</tr>

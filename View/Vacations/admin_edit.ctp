@@ -32,10 +32,12 @@
 						'type' => 'text',
 						'data-provide' => 'datepicker',
 						'data-date-language' => Configure::read('Config.locale'),
+						'data-date-format' => 'D.M. YYYY',
 						'class' => 'form-control',
 						'label' => __('Start'),
 						'placeholder' => __('Start'),
 						'inputGroup' => array('append'=>'glyphicon-th'),
+						'value' => $this->request->data['Vacation']['start_cz']
 						//BEWARE: datepicker needs JS initialization
 					));?>
 				</div>
@@ -44,15 +46,17 @@
 						'type' => 'text',
 						'data-provide' => 'datepicker',
 						'data-date-language' => Configure::read('Config.locale'),
+						'data-date-format' => 'D.M. YYYY',
 						'class' => 'form-control',
 						'label' => __('End'),
 						'placeholder' => __('End'),
 						'inputGroup' => array('append'=>'glyphicon-th'),
+						'value' => $this->request->data['Vacation']['end_cz']
 						//BEWARE: datepicker needs JS initialization
 					));?>
 				</div>
 				<div class="form-group">
-					<?php echo $this->Form->input('vacation_types_id', array('class'=>'form-control', 'placeholder'=>__('Vacation Types Id')));?>
+					<?php echo $this->Form->input('vacation_type_id', array('class'=>'form-control', 'placeholder'=>__('Vacation Types Id')));?>
 				</div>
 				<div class="form-group">
 					<?php echo $this->Form->input('user_id', array('class'=>'form-control', 'placeholder'=>__('User Id')));?>

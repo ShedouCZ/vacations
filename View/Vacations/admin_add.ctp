@@ -19,7 +19,9 @@
 		</div><!-- end col md 3 -->
 		<div class="col-md-9">
 			<?php echo $this->Form->create('Vacation', array('role'=>'form', 'class'=>'form-horizontal')); ?>
-
+				<div class="form-group">
+					<?php echo $this->Form->input('vacation_type_id', array('class'=>'form-control', 'label'=>'Type', 'placeholder'=>__('Type')));?>
+				</div>
 				<div class="form-group">
 					<?php echo $this->Form->input('title', array('class'=>'form-control', 'placeholder'=>__('Title')));?>
 				</div>
@@ -28,6 +30,7 @@
 						'type' => 'text',
 						'data-provide' => 'datepicker',
 						'data-date-language' => Configure::read('Config.locale'),
+						'data-date-format' => 'D.M. YYYY',
 						'class' => 'form-control',
 						'label' => __('Start'),
 						'placeholder' => __('Start'),
@@ -40,6 +43,7 @@
 						'type' => 'text',
 						'data-provide' => 'datepicker',
 						'data-date-language' => Configure::read('Config.locale'),
+						'data-date-format' => 'D.M. YYYY',
 						'class' => 'form-control',
 						'label' => __('End'),
 						'placeholder' => __('End'),
@@ -47,9 +51,7 @@
 						//BEWARE: datepicker needs JS initialization
 					));?>
 				</div>
-				<div class="form-group">
-					<?php echo $this->Form->input('vacation_types_id', array('class'=>'form-control', 'placeholder'=>__('Vacation Types Id')));?>
-				</div>
+				
 				<div class="form-group">
 					<?php echo $this->Form->input('user_id', array('class'=>'form-control', 'placeholder'=>__('User Id')));?>
 				</div>

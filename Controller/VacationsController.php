@@ -5,7 +5,6 @@ class VacationsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
 
-
 	public function admin_index() {
 		$this->Vacation->recursive = 0;
 		$this->set('vacations', $this->Paginator->paginate());

@@ -22,7 +22,7 @@
 						<th><?php echo $this->Paginator->sort('title'); ?></th>
 						<th><?php echo $this->Paginator->sort('start'); ?></th>
 						<th><?php echo $this->Paginator->sort('end'); ?></th>
-						<th><?php echo $this->Paginator->sort('vacation_types_id'); ?></th>
+						<th><?php echo $this->Paginator->sort('vacation_type_id'); ?></th>
 						<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 						<th class="actions"></th>
 					</tr>
@@ -33,12 +33,12 @@
 						<td><?php echo h($vacation['Vacation']['title']); ?></td>
 						<td><?php echo $this->Time->format($vacation['Vacation']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td><?php echo $this->Time->format($vacation['Vacation']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
-								<td>
-			<?php echo $this->Html->link($vacation['VacationTypes']['title'], array('controller' => 'vacation_types', 'action' => 'view', $vacation['VacationTypes']['id'])); ?>
-		</td>
-								<td>
-			<?php echo $this->Html->link($vacation['User']['id'], array('controller' => 'users', 'action' => 'view', $vacation['User']['id'])); ?>
-		</td>
+						<td>
+							<?php echo $this->Html->link($vacation['VacationType']['title'], array('controller' => 'vacation_types', 'action' => 'view', $vacation['VacationType']['id'])); ?>
+						</td>
+						<td>
+							<?php echo $this->Html->link($vacation['User']['fullname'], array('controller' => 'users', 'action' => 'view', $vacation['User']['id'])); ?>
+						</td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $vacation['Vacation']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $vacation['Vacation']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $vacation['Vacation']['id'])); ?>

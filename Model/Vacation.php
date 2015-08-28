@@ -5,13 +5,30 @@ class Vacation extends AppModel {
 	public $displayField = 'title';
 
 	public $dateFields  = array('start', 'end');
-
 	public $virtualFields = array(
-		'start' => "DATE_FORMAT(`Vacation`.`start`, '%e.%c.%Y')",
-		'end' => "DATE_FORMAT(`Vacation`.`end`, '%e.%c.%Y')",
+		'start_cz' => "DATE_FORMAT(`Vacation`.`start`, '%e.%c.%Y')",
+		'end_cz' => "DATE_FORMAT(`Vacation`.`end`, '%e.%c.%Y')",
+	);
+	
+	public $validate = array(
+		'start' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Please fill the start field',
+		),
+		'end' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Please fill the end field',
+		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	public function beforeSave($options = array()) {
+		parent::beforeSave();
+		if (empty($this->data[$this->alias]['title'])) {
+			$types = $this->VacationType->find('list');
+			$this->data[$this->alias]['title'] = $types[$this->data[$this->alias]['vacation_type_id']];
+		}
+		return true;
+	}
 
 	public $belongsTo = array(
 		'VacationType' => array(
