@@ -16,10 +16,7 @@
 				<thead>
 					<tr>
 						<th><?php echo $this->Paginator->sort('username'); ?></th>
-						<th><?php echo $this->Paginator->sort('password'); ?></th>
 						<th><?php echo $this->Paginator->sort('mail'); ?></th>
-						<th><?php echo $this->Paginator->sort('created'); ?></th>
-						<th><?php echo $this->Paginator->sort('modified'); ?></th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
@@ -27,10 +24,7 @@
 				<?php foreach ($users as $user) { ?>
 					<tr>
 						<td><?php echo h($user['User']['username']); ?></td>
-						<td><?php echo h($user['User']['password']); ?></td>
 						<td><?php echo h($user['User']['mail']); ?></td>
-						<td><?php echo $this->Time->format($user['User']['created'], '%-d.%-m.&nbsp;%Y'); ?></td>
-						<td><?php echo $this->Time->format($user['User']['modified'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $user['User']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $user['User']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>

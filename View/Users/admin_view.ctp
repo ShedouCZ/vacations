@@ -41,12 +41,6 @@
 						</td>
 					</tr>
 					<tr>
-						<th><?php echo __('Password'); ?></th>
-						<td>
-							<?php echo h($user['User']['password']); ?>
-						</td>
-					</tr>
-					<tr>
 						<th><?php echo __('Mail'); ?></th>
 						<td>
 							<?php echo h($user['User']['mail']); ?>

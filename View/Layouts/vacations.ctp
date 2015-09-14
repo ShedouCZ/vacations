@@ -34,7 +34,7 @@
 		echo $this->fetch('js');
 	?>
 
-	<?php if (Configure::read('Routing.admin')) { ?>
+	<?php if (0 && Configure::read('Routing.admin')) { ?>
 		<link rel="stylesheet" href="<?php echo "/css/site-admin.css?$version" ?>" type="text/css" media="screen">
 		<script src="<?php echo "/js/site-admin.js?$version"; ?>" type="text/javascript"></script>
 	<?php } ?>

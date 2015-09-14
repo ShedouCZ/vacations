@@ -96,15 +96,12 @@ module.exports = function(grunt) {
 		concat: {
 			js: {
 				src: [
-					//'Vendor/es5-shim/es5-shim.js',
-					//'Vendor/es5-shim/es5-sham.js',
+					'Vendor/es5-shim/es5-shim.js',
+					'Vendor/es5-shim/es5-sham.js',
 					'Vendor/jquery/dist/jquery.js',
-					'Vendor/moment/moment.js',
-					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.js',
 					//'js/modernizr.preserve3d.js', // brings modernizr for defunctr
-					'js/modernizr.custom.svg.js',   // // brings modernizr for defunctr
-					'Vendor/defunctr/src/defunctr.js',
-					'Vendor/moment-range/lib/moment-range.js',
+					//'js/modernizr.custom.svg.js',   // // brings modernizr for defunctr
+					//'Vendor/defunctr/src/defunctr.js',
 					'js/scroll-to-top.js',
 					'js/app.js',
 				],
@@ -117,20 +114,24 @@ module.exports = function(grunt) {
 			js_post: {
 				src: [
 					//'Vendor/react/react.js',
+					'Vendor/moment/moment.js',
+					//'Vendor/moment-range/lib/moment-range.js',
+					//'Vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js',
 					'Vendor/moment/locale/cs.js',
-					'Vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js',
+					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.js',
 					'Vendor/bootstrap/js/transition.js',
 					'Vendor/bootstrap/js/collapse.js',
 					'Vendor/bootstrap/dist/js/bootstrap.js',
 					'Vendor/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js',
 					//'dist/jsx-combined.js',
-					'Vendor/jquery-serialize-object/jquery.serialize-object.js',
-					'Vendor/H5F/h5f.min.js', // ie9 validation library
-					'Vendor/bootstrap-validator/js/validator.js',
+					//'Vendor/jquery-serialize-object/jquery.serialize-object.js',
+					//'Vendor/H5F/h5f.min.js', // ie9 validation library
+					//'Vendor/bootstrap-validator/js/validator.js',
 					'Vendor/bootbox.js/bootbox.js',
-					'Vendor/hammerjs/hammer.js',
-					'Vendor/jquery-hammerjs/jquery.hammer.js',
+					//'Vendor/hammerjs/hammer.js',
+					//'Vendor/jquery-hammerjs/jquery.hammer.js',
 					'Vendor/Sortable/Sortable.js',
+					'dist/browserify-bundle.js',
 					'js/post.js'
 				],
 				dest: 'webroot/js/site-post.js',
@@ -159,13 +160,13 @@ module.exports = function(grunt) {
 			css: {
 				src: [
 					// datetimepicker and its dependecies on bootstrap
-					'css/overrides/eonasdan-datetimepicker-bs.css',
+					//'css/overrides/eonasdan-datetimepicker-bs.css',
 					'dist/bs-custom.css',
 					'css/sortable_custom.css',
 					'Vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
 					'Vendor/tinycolorpicker/lib/jquery.tinycolorpicker.css',
 					//'Vendor/bootstrap/dist/css/bootstrap.css',
-					'css/bootstrap-validation.css',
+					//'css/bootstrap-validation.css',
 					'Vendor/font-awesome/css/font-awesome.css',
 					'css/*.css'
 				],
@@ -242,6 +243,31 @@ module.exports = function(grunt) {
 			grunt: {
 				files: ['Gruntfile.js'],
 				tasks: ['default']
+			},
+			browserify: {
+				files: ['<%= browserify.dev.src %>'],
+				tasks: ['browserify:dev']
+			}
+		},
+		browserify: {
+			options: {
+				debug: true,
+				transform: ['reactify'],
+				extensions: ['.jsx'],
+			},
+			dev: {
+				options: {
+					alias: ['react:']  // Make React available externally for dev tools
+				},
+				src: ['jsx/**/*'],
+				dest: 'dist/browserify-bundle.js'
+			},
+			production: {
+				options: {
+					debug: false
+				},
+				src: '<%= browserify.dev.src %>',
+				dest: 'dist/browserify-bundle.js'
 			}
 		}
 	});
@@ -260,11 +286,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-react');
 	grunt.loadNpmTasks('grunt-postcss');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-browserify');
 
 	// Task definition
 	grunt.registerTask('default', ['scripts', 'stylesheets', 'copy']);
-	grunt.registerTask('stylesheets', ['less', 'concat:css', 'concat:css_admin', /*'postcss', 'cssmin'*/]);
-	grunt.registerTask('scripts', [/*'react',*/ 'concat:js', 'concat:js_post', 'concat:js_admin']);
+	grunt.registerTask('stylesheets', ['less', 'concat:css', /*'postcss', 'cssmin'*/]);
+	grunt.registerTask('scripts', ['browserify:dev', 'concat:js', 'concat:js_post']);
 
 	grunt.registerTask('locales', ['po2json', 'json']);
 	//grunt.registerTask('stylesheets', ['less', 'concat:css', 'cssmin']);

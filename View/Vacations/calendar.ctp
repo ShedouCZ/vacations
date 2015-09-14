@@ -1,0 +1,1 @@
+<div id="Vacations">[REACT inside]</div>

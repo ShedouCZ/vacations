@@ -9,7 +9,10 @@ class VacationsController extends AppController {
 		$this->Vacation->recursive = 0;
 		$this->set('vacations', $this->Paginator->paginate());
 	}
-
+	
+	public function calendar() {
+		
+	}
 
 	public function admin_view($id = null) {
 		if (!$this->Vacation->exists($id)) {
