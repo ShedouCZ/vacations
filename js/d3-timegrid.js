@@ -261,7 +261,6 @@ App.timegrid.render = function (defaults) {
 		if (App.timegrid.mousedown_g) return;
 
 		var point = d3.mouse(this);
-		
 		App.timegrid.mousedown_data.start_js = g.scale_x_f.invert(point[0]);
 		App.timegrid.mousedown_data.start = sqlDate(App.timegrid.mousedown_data.start_js); // floor to midnight done here
 		App.timegrid.mousedown_data.x0 = g.scale_x_f(parseDate(App.timegrid.mousedown_data.start));
@@ -288,6 +287,7 @@ App.timegrid.render = function (defaults) {
 	}
 
 	function mousemove () {
+		// hover updates
 		if (App.timegrid.hover_group) {
 			var mouse_x = d3.mouse(this)[0];
 			var mouse_y = d3.mouse(this)[1];
@@ -298,17 +298,50 @@ App.timegrid.render = function (defaults) {
 			App.timegrid.hover_date.attr('y', mouse_y - 20);
 		}
 		
+		// vacation creation updates
 		if (!App.timegrid.mousedown_g) return;
-
-		// update rect
 		App.timegrid.mousedown_data.rect
 			.attr('width', d3.mouse(this)[0] - App.timegrid.mousedown_data.x0 )
 		;
+	}
+	
+	function addDays(date, days) {
+		var result = new Date(date);
+		result.setDate(date.getDate() + days);
+		return result;
 	}
 
 	function mouseup () {
 		svg.classed('active', false);
 		if (App.timegrid.mousedown_g) {
+			// end point
+			var point = d3.mouse(this);
+			App.timegrid.mousedown_data.end_js = addDays(g.scale_x_f.invert(point[0]), 1); // one plus os we floor 
+			App.timegrid.mousedown_data.end = sqlDate(App.timegrid.mousedown_data.end_js); // floor to midnight done here
+			
+			// new Vacation
+			var Vacation = {
+				id: 'PLACEHOLDER',
+				start: App.timegrid.mousedown_data.start,
+				end: App.timegrid.mousedown_data.end,
+				vacation_type_id: 2,
+				user_id: 114
+			};
+			var item = {
+				Vacation: Vacation,
+				User: {
+					fullname: App.timegrid.mousedown_data.user_fullname
+				},
+				VacationType: {
+					title: 'Služební cesta'
+				}
+			};
+			App.data.vacations.push(item);
+			rejoin(App.data.vacations, bars, context);
+			
+			// TODO ajax submit + PLACEHOLDERs update
+			
+			
 			App.timegrid.mousedown_g.remove();
 			App.timegrid.mousedown_g = false;
 			App.timegrid.mousedown_data = {};
