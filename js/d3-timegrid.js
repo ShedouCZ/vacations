@@ -17,8 +17,10 @@ App.timegrid.render = function (defaults) {
 	g.till = '2015-10-31 00:00:00';
 
 	//var parseDate = d3.time.format("%-d/%Y").parse;
+	var sqlDate    = d3.time.format("%Y-%m-%d 00:00:00");
 	var parseDate  = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	var formatDate = d3.time.format("%-d.%-m.");
+	
 
 	// SCALES
 	g.scale_x_f = d3.time.scale()
@@ -260,23 +262,28 @@ App.timegrid.render = function (defaults) {
 
 		var point = d3.mouse(this);
 		
-		App.timegrid.mousedown_data.x0 = point[0];
-		
-		// insert new vacation at this point
-		// todo compute and remember start node and date!
-		var user_fullname = g.scale_y_f.invert(point[1]);
+		App.timegrid.mousedown_data.start_js = g.scale_x_f.invert(point[0]);
+		App.timegrid.mousedown_data.start = sqlDate(App.timegrid.mousedown_data.start_js); // floor to midnight done here
+		App.timegrid.mousedown_data.x0 = g.scale_x_f(parseDate(App.timegrid.mousedown_data.start));
+		App.timegrid.mousedown_data.user_fullname = g.scale_y_f.invert(point[1]);
 		
 		App.timegrid.mousedown_g = focus.append("g")
 			.attr('transform', function (d) {
-				var left = point[0];
-				var top  = g.scale_y_f(user_fullname);
+				var left = App.timegrid.mousedown_data.x0;
+				var top  = g.scale_y_f(App.timegrid.mousedown_data.user_fullname);
 				return "translate("+left+","+top+")";
 			})
-			.classed('bar new', true);
+			.classed('bar new', true)
+		;
 			
 		App.timegrid.mousedown_data.rect = App.timegrid.mousedown_g.append('rect')
-				.attr("height", g.h_bar)
-				.attr('width', 2)
+			.attr("height", g.h_bar)
+			.attr('width', 2)
+		;
+		App.timegrid.mousedown_g.append('text')
+			.attr('y', Math.floor(g.h_bar / 2) + 5)
+			.attr('x', 4)
+			.text(formatDate(App.timegrid.mousedown_data.start_js))
 		;
 	}
 
