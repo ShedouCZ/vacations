@@ -18,6 +18,7 @@ App.timegrid.render = function (defaults) {
 
 	//var parseDate = d3.time.format("%-d/%Y").parse;
 	var sqlDate    = d3.time.format("%Y-%m-%d 00:00:00");
+	var czDate     = d3.time.format("%-d.%-m. %Y");
 	var parseDate  = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	var formatDate = d3.time.format("%-d.%-m.");
 	
@@ -340,7 +341,17 @@ App.timegrid.render = function (defaults) {
 			rejoin(App.data.vacations, bars, context);
 			
 			// TODO ajax submit + PLACEHOLDERs update
-			
+			var url = '/admin/vacations/add';
+			var data = {
+				Vacation: {
+					vacation_type_id: 2,
+					title: 'none',
+					start: czDate(App.timegrid.mousedown_data.start_js),
+					end: czDate(App.timegrid.mousedown_data.end_js),
+					user_id: 114
+				}
+			};
+			$.post(url, {data:data});
 			
 			App.timegrid.mousedown_g.remove();
 			App.timegrid.mousedown_g = false;
