@@ -131,8 +131,10 @@ module.exports = function(grunt) {
 					//'Vendor/hammerjs/hammer.js',
 					//'Vendor/jquery-hammerjs/jquery.hammer.js',
 					'Vendor/Sortable/Sortable.js',
+					'Vendor/d3/d3.js',
 					'dist/browserify-bundle.js',
-					'js/post.js'
+					'js/post.js',
+					'js/d3-timegrid.js'
 				],
 				dest: 'webroot/js/site-post.js',
 				nonull: true,
@@ -232,21 +234,21 @@ module.exports = function(grunt) {
 				}
 		},
 		watch: {
+			browserify: {
+				files: ['<%= browserify.dev.src %>'],
+				tasks: ['browserify:dev']
+			},
 			stylesheets: {
-				files: ['<%= concat.css.src %>', '<%= concat.css_admin.src %>', 'webroot/**/*.less'],
+				files: ['<%= concat.css.src %>', '<%= concat.css_admin.src %>', 'webroot/**/*.less', 'css/*.less', '!dist/bs-custom.css'],
 				tasks: ['stylesheets']
 			},
 			scripts: {
-				files: ['Locale/**/messages.po', 'jsx/**.jsx', '<%= concat.js.src %>', '<%= concat.js_post.src %>', '<%= concat.js_admin.src %>', 'Plugin/BlueUpload/View/Elements/*.hbs', 'View/**/*.hbs'],
+				files: ['Locale/**/messages.po', 'jsx/**.jsx', '<%= concat.js.src %>', '<%= concat.js_post.src %>', '<%= concat.js_admin.src %>', 'Plugin/BlueUpload/View/Elements/*.hbs', 'View/**/*.hbs', '!dist'],
 				tasks: ['scripts']
 			},
 			grunt: {
 				files: ['Gruntfile.js'],
 				tasks: ['default']
-			},
-			browserify: {
-				files: ['<%= browserify.dev.src %>'],
-				tasks: ['browserify:dev']
 			}
 		},
 		browserify: {
@@ -257,9 +259,10 @@ module.exports = function(grunt) {
 			},
 			dev: {
 				options: {
-					alias: ['react:']  // Make React available externally for dev tools
+					alias: ['react:'],  // Make React available externally for dev tools
+					watch: true
 				},
-				src: ['jsx/**/*'],
+				src: ['jsx/**'],
 				dest: 'dist/browserify-bundle.js'
 			},
 			production: {
@@ -291,7 +294,8 @@ module.exports = function(grunt) {
 	// Task definition
 	grunt.registerTask('default', ['scripts', 'stylesheets', 'copy']);
 	grunt.registerTask('stylesheets', ['less', 'concat:css', /*'postcss', 'cssmin'*/]);
-	grunt.registerTask('scripts', ['browserify:dev', 'concat:js', 'concat:js_post']);
+	//grunt.registerTask('scripts', ['browserify:dev', 'concat:js', 'concat:js_post']);
+	grunt.registerTask('scripts', ['concat:js', 'concat:js_post']);
 
 	grunt.registerTask('locales', ['po2json', 'json']);
 	//grunt.registerTask('stylesheets', ['less', 'concat:css', 'cssmin']);

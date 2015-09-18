@@ -6,6 +6,7 @@ class ApiController extends AppController {
 
 	public function get($id = null) {
 		$vacations = $this->Vacation->find('all');
+		//$users = $this->User->find('all', array('conditions'=>array('id'=>114)));
 		$users = $this->User->find('all');
 		
 		$res = array(
@@ -13,6 +14,11 @@ class ApiController extends AppController {
 			'users' => $users,
 		);
 		
-		return new CakeResponse(array('body'=>json_encode($res)));
+		if (!empty($this->request->params['requested'])) {
+			return $res;
+		}
+		
+		$res_json = json_encode($res);
+		return new CakeResponse(array('body'=>$res_json));
 	}
 }

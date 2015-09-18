@@ -30,6 +30,7 @@
     "fullcalendar-history": "ptica/fullcalendar-history",
     "typeahead.js": "~0.10.5",
     "bootbox.js": "makeusabrew/bootbox#~4.4.0",
-    "font-awesome": "~4.4.0"
+    "font-awesome": "~4.4.0",
+    "d3": "~3.5.6"
   }
 }

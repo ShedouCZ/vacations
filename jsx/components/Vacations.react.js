@@ -3,6 +3,7 @@ var AppStore   = require('../stores/AppStore');
 var AppActions = require('../actions/AppActions');
 var AppAPI     = require('../utils/AppAPI');
 var User       = require('../components/User.react.js');
+var Timegrid   = require('../components/Timegrid.react.js');
 
 /**
  * Retrieve the current data from the AppStore
@@ -10,8 +11,8 @@ var User       = require('../components/User.react.js');
 function getAppState() {
 	return {
 		users: AppStore.get_users(),
-		start: moment(),
-		end: moment()
+		from: moment(),
+		timespan:  moment.duration(3, "months")
 	};
 }
 
@@ -19,14 +20,14 @@ var Vacations = React.createClass({
 	getInitialState: function() {
 		return getAppState();
 	},
-	// subscribe here to changes on AppStore
+	// subscribe to changes on AppStore
 	componentDidMount: function () {
 		AppStore.addChangeListener(this._onChange);
 	},
 	componentWillUnmount: function() {
 		AppStore.removeChangeListener(this._onChange);
  	},
-	// with our callback
+	// callback for changes on AppStore
 	_onChange: function() {
 		this.setState(getAppState());
 	},
@@ -51,8 +52,11 @@ var Vacations = React.createClass({
 				</div>
 
 				<div className="row">
-					<div className="col-md-9">
+					<div className="col-md-2">
 						{users}
+					</div>
+					<div className="col-md-10">
+						<Timegrid users={all_users}/>
 					</div>
 				</div>
 			</div>
