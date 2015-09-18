@@ -18,7 +18,7 @@
 			<div id="advanced" style="margin-left: 30px;">
 				<?php foreach ($types as $type_id => $type_label) { ?>
 					<?php
-						$days_info = isset($type_info[$type_id]) ? " ($type_info[$type_id] dní)" : '';
+						$days_info = isset($type_info[$type_id]) ? " ($type_info[$type_id] days)" : '';
 					?>
 					<div style="width: 23%; float: left; margin-top: 15px; margin-left: 10px" class="block__list block__list_words">
 						<div class="block__list-title"><?php echo $type_label . $days_info ?></div>

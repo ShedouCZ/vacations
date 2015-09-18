@@ -3,6 +3,13 @@
 App.timegrid = App.timegrid || {};
 App.timegrid.mousedown_data = {};
 
+App.data.users_by_fullname = {};
+// construct lookup table
+for (var key in App.data.users) {
+	var fullname = App.data.users[key].User.fullname;
+	App.data.users_by_fullname[fullname] = App.data.users[key];
+}
+
 App.timegrid.render = function (defaults) {
 	var g = defaults;
 	g.padding = 20;
@@ -266,6 +273,7 @@ App.timegrid.render = function (defaults) {
 		App.timegrid.mousedown_data.start = sqlDate(App.timegrid.mousedown_data.start_js); // floor to midnight done here
 		App.timegrid.mousedown_data.x0 = g.scale_x_f(parseDate(App.timegrid.mousedown_data.start));
 		App.timegrid.mousedown_data.user_fullname = g.scale_y_f.invert(point[1]);
+		App.timegrid.mousedown_data.user = App.data.users_by_fullname[App.timegrid.mousedown_data.user_fullname];
 		
 		App.timegrid.mousedown_g = focus.append("g")
 			.attr('transform', function (d) {
@@ -288,13 +296,18 @@ App.timegrid.render = function (defaults) {
 	}
 
 	function mousemove () {
+		var end_x = 0;
 		// hover updates
 		if (App.timegrid.hover_group) {
 			var mouse_x = d3.mouse(this)[0];
 			var mouse_y = d3.mouse(this)[1];
-			var graph_x = g.scale_x_f.invert(mouse_x);
+			var end_js = g.scale_x_f.invert(mouse_x);
+			// compute rounded date
+			var end_rounded = sqlDate(addDays(end_js, 1));
+			end_x = g.scale_x_f(parseDate(end_rounded));
+			
 			App.timegrid.hover_line.attr("x1", mouse_x).attr("x2", mouse_x);
-			App.timegrid.hover_date.text(formatDate(graph_x));
+			App.timegrid.hover_date.text(formatDate(end_js));
   			App.timegrid.hover_date.attr('x', mouse_x + 5);
 			App.timegrid.hover_date.attr('y', mouse_y - 20);
 		}
@@ -302,7 +315,8 @@ App.timegrid.render = function (defaults) {
 		// vacation creation updates
 		if (!App.timegrid.mousedown_g) return;
 		App.timegrid.mousedown_data.rect
-			.attr('width', d3.mouse(this)[0] - App.timegrid.mousedown_data.x0 )
+			//.attr('width', d3.mouse(this)[0] - App.timegrid.mousedown_data.x0 )
+			.attr('width', end_x - App.timegrid.mousedown_data.x0 )
 		;
 	}
 	
@@ -348,7 +362,7 @@ App.timegrid.render = function (defaults) {
 					title: 'none',
 					start: czDate(App.timegrid.mousedown_data.start_js),
 					end: czDate(App.timegrid.mousedown_data.end_js),
-					user_id: 114
+					user_id: App.timegrid.mousedown_data.user.User.id
 				}
 			};
 			$.post(url, {data:data});
