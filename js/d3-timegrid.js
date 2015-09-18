@@ -95,33 +95,49 @@ App.timegrid.render = function (defaults) {
 		;
 	
 	// FOCUS
-	// focus.append("path")
-	// 	.datum(data)
-	// 	.attr("class", "area")
-	// 	.attr("d", area);
-	var bar = bars.selectAll(".bar")
-		.data(App.data.vacations)
-		.enter().append("g")
-			.attr('transform', function (d) {
-				var left = g.scale_x_f(parseDate(d.Vacation.start));
-				var top  = g.scale_y_f(d.User.fullname);
-				return "translate("+left+","+top+")";
+	function rejoin (data, bars, context) {
+		var bar = bars.selectAll(".bar")
+			.data(data)
+			.enter().append("g")
+				.attr('transform', function (d) {
+					var left = g.scale_x_f(parseDate(d.Vacation.start));
+					var top  = g.scale_y_f(d.User.fullname);
+					return "translate("+left+","+top+")";
+				})
+				.classed('bar', true)
+			;
+		bar.append('rect')
+			.attr("height", g.h_bar)
+			.attr('width', function (d) {
+				var left  = g.scale_x_f(parseDate(d.Vacation.start));
+				var right = g.scale_x_f(parseDate(d.Vacation.end));
+				return right - left;
 			})
-			.classed('bar', true)
-		;
-	bar.append('rect')
-		.attr("height", g.h_bar)
-		.attr('width', function (d) {
-			var left  = g.scale_x_f(parseDate(d.Vacation.start));
-			var right = g.scale_x_f(parseDate(d.Vacation.end));
-			return right - left;
-		})
-		;
-	bar.append('text').text(function (d) { return d.VacationType.title; } )
-		.attr('dy', Math.floor(g.h_bar / 2) + 5 + 'px')
-		.attr('dx', '5px')
-		;
-
+			;
+		bar.append('text').text(function (d) { return d.VacationType.title; } )
+			.attr('dy', Math.floor(g.h_bar / 2) + 5 + 'px')
+			.attr('dx', '5px')
+			;
+			
+		context.selectAll(".bar")
+			.data(data)
+			.enter().append("g")
+				.attr('transform', function (d) {
+					var left = g.scale_x_c(parseDate(d.Vacation.start));
+					var top  = g.scale_y_c(d.User.fullname);
+					return "translate("+left+","+top+")";
+				})
+				.classed('bar', true)
+				.append('rect')
+					.attr("height", 2)
+					.attr('width', function (d) {
+						var left  = g.scale_x_c(parseDate(d.Vacation.start));
+						var right = g.scale_x_c(parseDate(d.Vacation.end));
+						return right - left;
+					})
+			;
+	}
+	
 	focus.append("g")
 		.attr("class", "x axis bottom")
 		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
@@ -151,24 +167,6 @@ App.timegrid.render = function (defaults) {
 		.extent([g.scale_x_c.invert(0), g.scale_x_c.invert(g.w_focus / 4)])
 		.on("brush", brushed)
 		;
-		
-	context.selectAll(".bar")
-		.data(App.data.vacations)
-		.enter().append("g")
-			.attr('transform', function (d) {
-				var left = g.scale_x_c(parseDate(d.Vacation.start));
-				var top  = g.scale_y_c(d.User.fullname);
-				return "translate("+left+","+top+")";
-			})
-			.classed('bar', true)
-			.append('rect')
-				.attr("height", 2)
-				.attr('width', function (d) {
-					var left  = g.scale_x_c(parseDate(d.Vacation.start));
-					var right = g.scale_x_c(parseDate(d.Vacation.end));
-					return right - left;
-				})
-		;
 
 	context.append("g")
 		.attr("class", "x brush")
@@ -176,6 +174,8 @@ App.timegrid.render = function (defaults) {
 		.selectAll("rect") // two of then there: background + extent
 		.attr("y", 1)
 		.attr("height", g.h_brush - 2*g.padding + 7);
+	
+	rejoin(App.data.vacations, bars, context);
 
 	// draw axes
 
@@ -197,7 +197,7 @@ App.timegrid.render = function (defaults) {
 	// 	.classed('grid', true)
 	// 	.call(g.grid_axis_y);
 	
-	function redraw() {
+	function rescale() {
 		focus.select(".x.axis.top").call(g.axis_x_f_top);
 		focus.select(".x.axis.bottom").call(g.axis_x_f_bottom);
 		bars.selectAll(".bar")
@@ -219,7 +219,7 @@ App.timegrid.render = function (defaults) {
 		// adjust focused scale
 		g.scale_x_f.domain(brush.empty() ? g.scale_x_c.domain() : brush.extent());
 		// update bars+axis to draw with new SCALES
-		redraw();
+		rescale();
 		// reset zoom scale
 		// zoom.x(g.scale_x_f);
 	}
@@ -235,7 +235,7 @@ App.timegrid.render = function (defaults) {
 		
 		
 		//console.log(d3.event.scale);
-		redraw();
+		rescale();
 		// force changing brush range
 		brush.extent(g.scale_x_f.domain());
 		svg.select(".brush").call(brush);
