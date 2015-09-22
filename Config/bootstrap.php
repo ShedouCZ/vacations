@@ -18,18 +18,19 @@ CakePlugin::load(array(
 	'BootstrapCake',
 	'Bs3Helpers',
 	'AuthHelper',
+	'Tools',
 	//'Configuration',
 	'ClearCache',
 	//'RangeParser',
-	'Gallery' => array(
-		'bootstrap' => true,
-		'routes' => true
-	),
 	//'Localized',
-	//'DebugKit',
+	'DebugKit',
 ));
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
+
+if (!defined('APP_ROLE_CACHE')) {
+	define('APP_ROLE_CACHE', '_cake_core_'); // use the most persistent cache by default
+}
 
 /**
  * The settings below can be used to set additional paths to models, views and controllers.

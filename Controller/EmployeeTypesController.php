@@ -5,12 +5,12 @@ class EmployeeTypesController extends AppController {
 	public $components = array('Paginator', 'Session');
 	public $uses = array('EmployeeType', 'User');
 
-	public function admin_types() {
+	public function types() {
 		if ($this->request->is('post')) {
 			$this->User->save($this->request->data);
 			exit();
 		} else {
-			$users = $this->User->find('all', array('order'=>'User.sn'));
+			$users = $this->User->find('all', array('order'=>'User.sn', 'conditions'=>array('disabled'=>0, 'not' => array('User.sn' => null))));
 			$users_by_type = Hash::combine($users, '{n}.User.id', '{n}.User', '{n}.User.employee_type_id');
 			$types = $this->EmployeeType->find('list');
 			$type_info = $this->EmployeeType->find('list', array('fields'=>array('id', 'days')));
@@ -20,12 +20,12 @@ class EmployeeTypesController extends AppController {
 		}
 	}
 
-	public function admin_index() {
+	public function index() {
 		$this->EmployeeType->recursive = 0;
 		$this->set('employeeTypes', $this->Paginator->paginate());
 	}
 
-	public function admin_reorder() {
+	public function reorder() {
 		if ($this->request->is('post')) {
 			$this->EmployeeType->saveMany($this->request->data);
 			exit();
@@ -33,7 +33,7 @@ class EmployeeTypesController extends AppController {
 		$this->set('employeeTypes', $this->EmployeeType->find('all'));
 	}
 
-	public function admin_view($id = null) {
+	public function view($id = null) {
 		if (!$this->EmployeeType->exists($id)) {
 			throw new NotFoundException(__('Invalid employee type'));
 		}
@@ -41,7 +41,7 @@ class EmployeeTypesController extends AppController {
 		$this->set('employeeType', $this->EmployeeType->find('first', $options));
 	}
 
-	public function admin_add() {
+	public function add() {
 		if ($this->request->is('post')) {
 			$this->EmployeeType->create();
 			if ($this->EmployeeType->save($this->request->data)) {
@@ -53,7 +53,7 @@ class EmployeeTypesController extends AppController {
 		}
 	}
 
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		if (!$this->EmployeeType->exists($id)) {
 			throw new NotFoundException(__('Invalid employee type'));
 		}
@@ -70,7 +70,7 @@ class EmployeeTypesController extends AppController {
 		}
 	}
 
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		$this->EmployeeType->id = $id;
 		if (!$this->EmployeeType->exists()) {
 			throw new NotFoundException(__('Invalid employee type'));

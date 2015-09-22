@@ -34,6 +34,9 @@
 					<?php echo $this->Form->input('mail', array('class'=>'form-control', 'placeholder'=>__('Mail')));?>
 				</div>
 				<div class="form-group">
+					<?php echo $this->Form->input('Role', array('multiple'=>'checkbox', 'placeholder' => __('Modified')));?>
+				</div>
+				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
 						<?php echo $this->Form->submit(__('Submit'), array('class'=>'btn btn-primary')); ?>
 					</div>

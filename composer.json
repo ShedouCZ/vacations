@@ -38,9 +38,12 @@
         "codaxis/cakephp-bootstrap3-helpers": "1.1",
         "ceeram/clear_cache": "~1.1",
         "webtechnick/configuration": "dev-bootstrap_theme",
-        "hugodias/cakegallery": "dev-locale",
         "ptica/LdapAuth": "dev-master",
+        "dereuromark/cakephp-tools": "2.x-dev",
         "ptica/auth-helper" : "dev-master"
+    },
+    "require-dev": {
+        "cakephp/debug_kit": "2.2.*"
     },
     "config": {
         "vendor-dir": "Vendor/"

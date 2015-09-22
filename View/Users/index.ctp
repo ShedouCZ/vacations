@@ -1,3 +1,10 @@
+<style>
+	.user_disabled label {
+		font-weight: normal;
+		color: #aaa;
+	}
+</style>
+
 <div class="users index">
 	<div class="row">
 		<div class="col-md-12">
@@ -17,14 +24,20 @@
 					<tr>
 						<th><?php echo $this->Paginator->sort('username'); ?></th>
 						<th><?php echo $this->Paginator->sort('mail'); ?></th>
+						<th><?php echo $this->Paginator->sort('disabled'); ?></th>
 						<th class="actions"></th>
 					</tr>
 				</thead>
 				<tbody>
+				<?php //$this->Form->create('User'); ?>
 				<?php foreach ($users as $user) { ?>
 					<tr>
 						<td><?php echo h($user['User']['username']); ?></td>
 						<td><?php echo h($user['User']['mail']); ?></td>
+						<td class="user_disabled">
+							<?php $checked = $user['User']['disabled'] ? 'checked="checked"' : ''; ?>
+							<label><input type="checkbox" <?php echo $checked?> data-id="<?php echo $user['User']['id']?>"/> disabled</label>
+						</td>
 						<td class="actions">
 							<?php echo $this->Html->link('<span class="glyphicon glyphicon-edit"></span>', array('action' => 'edit', $user['User']['id']), array('escape' => false)); ?>
 							<?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>', array('action' => 'delete', $user['User']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
@@ -56,3 +69,10 @@
 
 
 </div>
+
+<script type="text/javascript">
+	$('.user_disabled input').on('change', function () {
+		var url = App.base + '/users/disable/' + $(this).data('id');
+		$.post(url);
+	});
+</script>

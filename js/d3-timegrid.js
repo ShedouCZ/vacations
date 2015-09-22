@@ -3,6 +3,7 @@
 App.timegrid = App.timegrid || {};
 App.timegrid.mousedown_data = {};
 
+App.data = App.data || {};
 App.data.users_by_fullname = {};
 // construct lookup table
 for (var key in App.data.users) {

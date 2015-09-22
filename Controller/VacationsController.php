@@ -2,10 +2,15 @@
 App::uses('AppController', 'Controller');
 class VacationsController extends AppController {
 	public $layout = 'BootstrapCake.bootstrap';
-
 	public $components = array('Paginator', 'Session');
+	
+	// declare public actions
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('index', 'calendar');
+	}
 
-	public function admin_index() {
+	public function index() {
 		$this->Vacation->recursive = 0;
 		$this->set('vacations', $this->Paginator->paginate());
 	}
@@ -14,7 +19,7 @@ class VacationsController extends AppController {
 		
 	}
 
-	public function admin_view($id = null) {
+	public function view($id = null) {
 		if (!$this->Vacation->exists($id)) {
 			throw new NotFoundException(__('Invalid vacation'));
 		}
@@ -22,7 +27,7 @@ class VacationsController extends AppController {
 		$this->set('vacation', $this->Vacation->find('first', $options));
 	}
 
-	public function admin_add() {
+	public function add() {
 		if ($this->request->is('post')) {
 			$this->Vacation->create();
 			if ($this->Vacation->save($this->request->data)) {
@@ -37,7 +42,7 @@ class VacationsController extends AppController {
 		$this->set(compact('vacationTypes', 'users'));
 	}
 
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		if (!$this->Vacation->exists($id)) {
 			throw new NotFoundException(__('Invalid vacation'));
 		}
@@ -57,7 +62,7 @@ class VacationsController extends AppController {
 		$this->set(compact('vacationTypes', 'users'));
 	}
 
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		$this->Vacation->id = $id;
 		if (!$this->Vacation->exists()) {
 			throw new NotFoundException(__('Invalid vacation'));

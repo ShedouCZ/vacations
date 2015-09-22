@@ -26,7 +26,7 @@ class AppController extends Controller {
 		'Session',
 		'Auth',
 		'Paginator',
-		//'DebugKit.Toolbar',
+		'DebugKit.Toolbar',
 	);
 
 	public $helpers = array(
@@ -37,7 +37,7 @@ class AppController extends Controller {
 
 	public function beforeFilter() {
 		/**
-		 * AUTHORIZATION
+		 * AUTHENTICATE
 		 */
 		$this->Auth->authenticate = array(
 			'LdapAuth.Ldap' => Configure::read('ldap'),
@@ -52,29 +52,36 @@ class AppController extends Controller {
 		$this->Auth->loginRedirect = array(
 			'controller' => 'vacations',
 			'action' => 'index',
-			'admin' => true
+			'admin' => false
 		);
 		$this->Auth->logoutRedirect = array(
-			'controller' => 'users',
-			'action' => 'login',
+			'controller' => 'vacations',
+			'action' => 'index',
 			'plugin' => false,
 			'admin' => false
 		);
 
-		$this->Auth->allow('index', 'view', 'display', 'get');
+		/**
+		 * AUTHORIZATION
+		 */
+		$this->Auth->allow('display', 'get');
+
+		// https://github.com/dereuromark/cakephp-tools/wiki/Tiny-Auth-Role-setup
+		// but we use it as only `act_role` is active!
+		$authorize_config = array(
+			'aclKey'   => 'act_role',
+			'aclModel' => 'available_roles',
+		);
+		// need to configure available_roles manually
+		// as default detection switches to multiple roles mode as a side effect
+		Configure::load('tiny_authorize');
+
+		$this->Auth->authorize = array('Tools.Tiny' => $authorize_config);
 
 		/**
 		 * LAYOUT
 		 */
-		if (
-			$this->request->url == 'login' ||
-			in_array($this->params['prefix'], array('admin'))
-		) {
-			$this->layout = 'vacations';
-			Configure::write('Routing.admin', true);
-		} else {
-			$this->layout = 'vacations';
-		}
+		$this->layout = 'vacations';
 	}
 
 		public function beforeRender() {
