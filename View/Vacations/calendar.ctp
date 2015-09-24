@@ -13,5 +13,6 @@
 </script>
 
 <div id="Vacations">
+	<svg id="context" class="sticky"></svg>
 	<svg id="timegrid"></svg>
 </div>

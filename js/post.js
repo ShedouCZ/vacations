@@ -28,23 +28,23 @@ $('input[data-provide=colorpicker]').tinycolorpicker({
 
 // MODULE sortable
 $('.list-group').each(function (i,e) {
-    var id = e.id;
-    var $e = $(e);
-    Sortable.create(document.getElementById(id), {
-        handle: '.glyphicon-move',
-        animation: 150,
-        // dragging ended
-        onEnd: function (/**Event*/ e) {
-            var data = $e.find('[data-item-id]').map(function (i,v) {
-                return {
-                    'id': $(v).data('item-id'),
-                    'ord': i
-                };
-            }).toArray();
-            var url = $e.data('reorder-url') || window.location.href;
-            $.post(url, {data:data});
-        }
-    });
+	var id = e.id;
+	var $e = $(e);
+	Sortable.create(document.getElementById(id), {
+		handle: '.glyphicon-move',
+		animation: 150,
+		// dragging ended
+		onEnd: function (/**Event*/ e) {
+			var data = $e.find('[data-item-id]').map(function (i,v) {
+				return {
+					'id': $(v).data('item-id'),
+					'ord': i
+				};
+			}).toArray();
+			var url = $e.data('reorder-url') || window.location.href;
+			$.post(url, {data:data});
+		}
+	});
 });
 
 // MODULE sortable - employee types
@@ -90,4 +90,37 @@ $('.employee_type_box').on('click', 'li', function () {
 	$.post(url, {data:data});
 });
 
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+}
+var onscroll = function () {
+	var windowTop = $(window).scrollTop(); // returns number
+	if (stickyTop -40 < windowTop) {
+		d3.select('.sticky').classed('stuck', true);
+	} else {
+		d3.select('.sticky').classed('stuck', false);
+	}
+};
+var debounced_onscroll = debounce(onscroll, 100);
 
+// STICKY elements - fixed position once their touch top menu
+var $stickies = $('.sticky');
+if ($stickies.length) {
+	var stickyTop = $('.sticky').offset().top;
+	$(window).scroll(debounced_onscroll);
+}

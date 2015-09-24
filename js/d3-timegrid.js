@@ -16,7 +16,7 @@ App.timegrid.render = function (defaults) {
 	g.padding = 20;
 	g.padding_left = 160;
 	g.brush = {};
-	g.h_brush = 100;
+	g.h_brush = 70;
 	g.w_focus   = g.w - g.padding_left - g.padding;
 	g.w_context = g.w_focus;
 	g.h_focus   = g.h - g.h_brush - 4 * g.padding;
@@ -68,10 +68,10 @@ App.timegrid.render = function (defaults) {
 		.orient('left');
 
 	// SVG
-	var svg = d3.select("svg")
+	var svg = d3.select("#timegrid")
 		.attr("width", g.w)
 		.attr("height", g.h)
-		.attr("border", 1);
+	;
 
 	svg.append("defs").append("clipPath")
 		.attr("id", "clip")
@@ -82,7 +82,7 @@ App.timegrid.render = function (defaults) {
 
 	var focus = svg.append("g")
 		.attr("class", "focus")
-		.attr("transform", "translate(" + g.padding_left + ", " + (g.padding + g.h_brush) + ")")
+		.attr("transform", "translate(" + g.padding_left + ", " + (0) + ")")
 		;
 	
 	// rect to capture pointer events in the focus area
@@ -93,11 +93,14 @@ App.timegrid.render = function (defaults) {
 		.style("pointer-events", "all")
 		;
 
-	var context = svg.append("g")
+	var context_svg = d3.select("#context")
+		.attr("width", g.w)
+		.attr("height", g.h_brush)
+		;
+	var context  =	context_svg.append("g")
 		.attr("class", "context")
 		.attr("transform", "translate(" + g.padding_left + ", " + g.padding + ")")
 		;
-	
 	var bars = focus.append("g")
 		.classed("bars", true)
 		.attr("clip-path", "url(#clip)")
@@ -127,48 +130,26 @@ App.timegrid.render = function (defaults) {
 			.attr('dy', Math.floor(g.h_bar / 2) + 5 + 'px')
 			.attr('dx', '5px')
 			;
-			
-		context.selectAll(".bar")
-			.data(data)
-			.enter().append("g")
-				.attr('transform', function (d) {
-					var left = g.scale_x_c(parseDate(d.Vacation.start));
-					var top  = g.scale_y_c(d.User.fullname);
-					return "translate("+left+","+top+")";
-				})
-				.classed('bar', true)
-				.append('rect')
-					.attr("height", 2)
-					.attr('width', function (d) {
-						var left  = g.scale_x_c(parseDate(d.Vacation.start));
-						var right = g.scale_x_c(parseDate(d.Vacation.end));
-						return right - left;
-					})
-			;
 	}
 	
 	focus.append("g")
 		.attr("class", "x axis bottom")
 		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
 		.call(g.axis_x_f_bottom);
-	focus.append("g")
-		.attr("class", "x axis top")
-		.attr("transform", "translate(0, 0)")
-		.call(g.axis_x_f_top);
 
 	focus.append("g")
 		.attr("class", "y axis")
 		.call(g.axis_y);
 		
-	// context.append("path")
-	// 	.datum(data)
-	// 	.attr("class", "area")
-	// 	.attr("d", area2);
-
 	context.append("g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(0,0)")
 		.call(g.axis_x_c);
+	
+	context.append("g")
+		.attr("class", "x axis top")
+		.attr("transform", "translate(0, " + (g.h_brush - g.padding - 1) + ")")
+		.call(g.axis_x_f_top);
 
 	// brush
 	var brush = d3.svg.brush()
@@ -182,7 +163,7 @@ App.timegrid.render = function (defaults) {
 		.call(brush)
 		.selectAll("rect") // two of then there: background + extent
 		.attr("y", 1)
-		.attr("height", g.h_brush - 2*g.padding + 7);
+		.attr("height", g.h_brush - 2*g.padding - 7);
 	
 	rejoin(App.data.vacations, bars, context);
 
@@ -207,7 +188,7 @@ App.timegrid.render = function (defaults) {
 	// 	.call(g.grid_axis_y);
 	
 	function rescale() {
-		focus.select(".x.axis.top").call(g.axis_x_f_top);
+		context.select(".x.axis.top").call(g.axis_x_f_top);
 		focus.select(".x.axis.bottom").call(g.axis_x_f_bottom);
 		bars.selectAll(".bar")
 			.attr('transform', function (d) {
@@ -227,7 +208,7 @@ App.timegrid.render = function (defaults) {
 	function brushed() {
 		// adjust focused scale
 		g.scale_x_f.domain(brush.empty() ? g.scale_x_c.domain() : brush.extent());
-		// update bars+axis to draw with new SCALES
+		// update bars+axis to draw with new scales
 		rescale();
 		// reset zoom scale
 		// zoom.x(g.scale_x_f);
@@ -240,10 +221,6 @@ App.timegrid.render = function (defaults) {
 		console.log(d3.event.translate);
 		// x is relative to current position
 		var x = d3.event.translate[0];
-		console.log(x);
-		
-		
-		//console.log(d3.event.scale);
 		rescale();
 		// force changing brush range
 		brush.extent(g.scale_x_f.domain());
@@ -255,7 +232,6 @@ App.timegrid.render = function (defaults) {
 		.x(g.scale_x_f)
 		.on("zoom", zoomed)
 		;
-	
 	
 	// no zoom no pan now
 	// as click for adding new vacations
@@ -406,7 +382,7 @@ App.timegrid.render = function (defaults) {
 if ($('#Vacations').length) {
 	var g = {};
 	g.h_bar = 25;
-	g.h = App.data.users.length * g.h_bar + 240;
+	g.h = App.data.users.length * g.h_bar + 10;
 	g.w = parseInt($('#Vacations').css('width'),10);
 	App.timegrid.render(g);
 }
