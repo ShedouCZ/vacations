@@ -30,7 +30,12 @@
         {
             "type": "vcs",
             "url": "https://github.com/ptica/cakegallery.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/ptica/deploy-cake"
         }
+
     ],
     "require": {
         "cakephp/cakephp": "2.6.*",
