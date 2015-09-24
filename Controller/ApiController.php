@@ -7,7 +7,7 @@ class ApiController extends AppController {
 	public function get($id = null) {
 		$vacations = $this->Vacation->find('all');
 		//$users = $this->User->find('all', array('conditions'=>array('id'=>114)));
-		$users = $this->User->find('all');
+		$users = $this->User->find('all', array('order'=>'User.sn', 'conditions'=>array('disabled'=>0, 'not' => array('User.sn' => null))));
 		
 		$res = array(
 			'vacations' => $vacations,
