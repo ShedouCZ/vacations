@@ -1,0 +1,63 @@
+/* d3 */
+#timegrid, #context {
+    font: 10px sans-serif;
+	display: block;
+}
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.grid path {
+    stroke-width: 0;
+}
+.axis.y {
+	font: 14px sans-serif;
+}
+.bar rect {
+	stroke: #ADD8E6;
+	stroke-width: 2px;
+	fill: #0AF;
+	opacity: 0.7;
+}
+.bar text {
+	stroke: #fff;
+	fill: #fff;
+	font-size: 11px;
+	letter-spacing: 1px;
+	opacity: 1;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.focus {
+}
+
+.hover-line { 
+  stroke: grey;  
+  fill: none;
+  stroke-width: 1px;
+}
+.gover-date {
+}
+
+#context {
+	background-color: white;
+	top: 1px;
+	position: relative;
+	transition: 0.1s;
+}
+
+.stuck {
+	position: fixed!important;
+	top: 40px!important;
+}
