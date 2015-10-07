@@ -4,20 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "30a2e2e3b9596087f24646a06917285d",
+    "hash": "b9d5ad0334996c1f19b09d2446a1a8fc",
+    "content-hash": "ae8f33778911cb63c09a1dd45fbeda64",
     "packages": [
         {
             "name": "cakephp/cakephp",
-            "version": "2.6.9",
+            "version": "2.6.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "8717352f15c6c183f1fde9bd25dfd25b8a6fb810"
+                "reference": "3e0b6cc285e283b7f097b9ecf4898ba3b92b477d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/8717352f15c6c183f1fde9bd25dfd25b8a6fb810",
-                "reference": "8717352f15c6c183f1fde9bd25dfd25b8a6fb810",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/3e0b6cc285e283b7f097b9ecf4898ba3b92b477d",
+                "reference": "3e0b6cc285e283b7f097b9ecf4898ba3b92b477d",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +48,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-07-16 01:22:16"
+            "time": "2015-08-07 01:35:52"
         },
         {
             "name": "ceeram/clear_cache",
@@ -216,45 +217,105 @@
             "time": "2015-02-18 17:17:01"
         },
         {
-            "name": "hugodias/cakegallery",
-            "version": "dev-locale",
+            "name": "dereuromark/cakephp-shim",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ptica/cakegallery.git",
-                "reference": "f3ff4f15ec4da621d9d40e230ed34e992d142ffc"
+                "url": "https://github.com/dereuromark/cakephp-shim.git",
+                "reference": "0f8d752a325e8ec532bdb6a4e714709ff5d9e52a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ptica/cakegallery/zipball/9d2e3e5c67aeb74bd2e311def671704f6189d8d7",
-                "reference": "f3ff4f15ec4da621d9d40e230ed34e992d142ffc",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-shim/zipball/0f8d752a325e8ec532bdb6a4e714709ff5d9e52a",
+                "reference": "0f8d752a325e8ec532bdb6a4e714709ff5d9e52a",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": "*"
+                "composer/installers": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "mobiledetect/mobiledetectlib": "2.*"
+            },
+            "suggest": {
+                "ircmaxell/password-compat": "PHP5.4 compatability for the PHP5.5 password hashing functionality.",
+                "mobiledetect/mobiledetectlib": "Better up-to-date mobile/tablet detection."
             },
             "type": "cakephp-plugin",
             "extra": {
-                "installer-name": "Gallery"
+                "installer-name": "Shim"
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "Hugo Dias",
+                    "name": "Mark Scherer",
+                    "homepage": "http://www.dereuromark.de",
                     "role": "Maintainer"
                 }
             ],
-            "description": "No description",
-            "homepage": "http://github.com/hugodias/cakegallery",
+            "description": "A CakePHP plugin to shim applications between major framework versions.",
+            "homepage": "https://github.com/dereuromark/cakephp-shim",
             "keywords": [
-                "cakephp"
+                "cakephp",
+                "helpers",
+                "plugin",
+                "shim"
             ],
-            "support": {
-                "issues": "https://github.com/hugodias/cakegallery/issues",
-                "source": "https://github.com/hugodias/cakegallery"
+            "time": "2015-05-14 18:25:07"
+        },
+        {
+            "name": "dereuromark/cakephp-tools",
+            "version": "2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dereuromark/cakephp-tools.git",
+                "reference": "843fe33262028113d2664d75b2ca87aed84de10e"
             },
-            "time": "2015-06-08 21:16:33"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-tools/zipball/843fe33262028113d2664d75b2ca87aed84de10e",
+                "reference": "843fe33262028113d2664d75b2ca87aed84de10e",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "dereuromark/cakephp-shim": "0.4.*",
+                "php": ">=5.4"
+            },
+            "suggest": {
+                "pelago/emogrifier": "When using InlineCss lib and CSS to inline HTML transformation."
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "installer-name": "Tools"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Scherer",
+                    "homepage": "http://www.dereuromark.de",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A CakePHP plugin containing lots of useful and reusable tools",
+            "homepage": "https://github.com/dereuromark/cakephp-tools",
+            "keywords": [
+                "behaviors",
+                "cakephp",
+                "components",
+                "datasources",
+                "helpers",
+                "plugin",
+                "tools",
+                "utils"
+            ],
+            "time": "2015-10-02 19:24:25"
         },
         {
             "name": "ptica/BootstrapCake",
@@ -262,12 +323,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ptica/BootstrapCake.git",
-                "reference": "c922d76245b95f3cca53c02fcab5e9573020112c"
+                "reference": "44f28db38af34d3a11c7a5025c9d0658a33e26f5"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ptica/BootstrapCake/zipball/44f28db38af34d3a11c7a5025c9d0658a33e26f5",
-                "reference": "c922d76245b95f3cca53c02fcab5e9573020112c",
+                "reference": "44f28db38af34d3a11c7a5025c9d0658a33e26f5",
                 "shasum": ""
             },
             "require": {
@@ -278,37 +339,7 @@
             "support": {
                 "source": "https://github.com/ptica/BootstrapCake/tree/master"
             },
-            "time": "2015-07-01 08:55:28"
-        },
-        {
-            "name": "ptica/Deploy",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ptica/deploy-cake.git",
-                "reference": "4b0e8d3e121da0f037ee0d0dd51478c0675462db"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ptica/deploy-cake/zipball/4b0e8d3e121da0f037ee0d0dd51478c0675462db",
-                "reference": "4b0e8d3e121da0f037ee0d0dd51478c0675462db",
-                "shasum": ""
-            },
-            "require": {
-                "composer/installers": "*",
-                "php": ">=5.3.0"
-            },
-            "type": "cakephp-plugin",
-            "license": [
-                "MIT"
-            ],
-            "description": "CakePHP shell for generation of vhost.conf and mysql dbs ",
-            "homepage": "http://github.com/ptica/deploy-cake",
-            "support": {
-                "source": "https://github.com/ptica/deploy-cake/tree/master",
-                "issues": "https://github.com/ptica/deploy-cake/issues"
-            },
-            "time": "2015-04-14 18:29:19"
+            "time": "2015-07-29 14:50:58"
         },
         {
             "name": "ptica/LdapAuth",
@@ -403,16 +434,65 @@
             "time": "2015-01-30 10:29:53"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "cakephp/debug_kit",
+            "version": "2.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cakephp/debug_kit.git",
+                "reference": "6c318a779b63bd567fd17811aecc7654a74bbec5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/6c318a779b63bd567fd17811aecc7654a74bbec5",
+                "reference": "6c318a779b63bd567fd17811aecc7654a74bbec5",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                },
+                "installer-name": "DebugKit"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Story",
+                    "homepage": "http://mark-story.com",
+                    "role": "Author"
+                },
+                {
+                    "name": "CakePHP Community",
+                    "homepage": "https://github.com/cakephp/debug_kit/graphs/contributors"
+                }
+            ],
+            "description": "CakePHP Debug Kit",
+            "homepage": "https://github.com/cakephp/debug_kit",
+            "keywords": [
+                "cakephp",
+                "debug",
+                "kit"
+            ],
+            "time": "2015-09-13 20:07:55"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "ptica/bootstrapcake": 20,
         "webtechnick/configuration": 20,
-        "hugodias/cakegallery": 20,
         "ptica/ldapauth": 20,
-        "ptica/auth-helper": 20,
-        "ptica/deploy": 20
+        "dereuromark/cakephp-tools": 20,
+        "ptica/auth-helper": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
