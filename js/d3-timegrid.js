@@ -58,10 +58,12 @@ App.timegrid.render = function (defaults) {
 	g.axis_x_f_bottom = d3.svg.axis()
 		.scale(g.scale_x_f)
 		.tickSize(-1 * g.h_focus)  // full height up to the top
+		.ticks(d3.time.day, 1)
 		.tickFormat(formatDate)
 		.orient('bottom');
 	g.axis_x_f_top = d3.svg.axis()
 		.scale(g.scale_x_f)
+		.ticks(d3.time.day, 1)
 		.tickFormat(formatDate)
 		.orient('top');
 	g.axis_x_c = d3.svg.axis()
@@ -159,7 +161,7 @@ App.timegrid.render = function (defaults) {
 	// brush
 	var brush = d3.svg.brush()
 		.x(g.scale_x_c)
-		.extent([g.scale_x_c.invert(0), g.scale_x_c.invert(g.w_focus / 8)])
+		.extent([g.scale_x_c.invert(0), g.scale_x_c.invert(g.w_focus / 3)])
 		.on("brush", brushed)
 		;
 
