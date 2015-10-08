@@ -1,4 +1,6 @@
 // d3 code
+// date conventions: [start, end) (end is not included in the interval!)
+
 
 App.timegrid = App.timegrid || {};
 App.timegrid.mousedown_data = {};
@@ -12,14 +14,33 @@ for (var key in App.data.users) {
 	App.data.users_by_fullname[fullname] = App.data.users[key];
 }
 
-App.get_vacation_stats = function (vacations) {
+App.get_vacation_length = function (start, end) {
+	return moment(end).diff(moment(start), 'days');
+};
+App.get_vacation_year_split = function (vacation) {
+	var $start = moment(vacation.start);
+	var $end   = moment(vacation.end);
+	var res = {};
+	if ($end.year() < $start.year()) return [];
+	while ($end.year() > $start.year()) {
+		var $year_end = $start.clone().endOf('year');
+		$year_end.add(1, 'ms');       // move clock to next day
+		res[$start.year()] = $year_end.diff($start, 'days');
+		$start = $year_end;
+	}
+	res[$start.year()] = $end.diff($start, 'days');
+	return res;
+};
+App.data.year_splits = {};
+App.compute_year_splits = function (vacations) {
 	vacations = vacations || App.data.vacations;
 	for (var key in vacations) {
 		var fullname = vacations[key].User.fullname;
-		App.data.vacations_by_fullname[fullname][year] = App.data.vacations[key];
+		var vacation = vacations[key].Vacation;
+		var year_split = App.get_vacation_year_split(vacation);
+		App.data.year_splits[fullname] = year_split;
 	}
-
-}
+};
 
 App.timegrid.render = function (defaults) {
 	var g = defaults;
@@ -31,8 +52,8 @@ App.timegrid.render = function (defaults) {
 	g.w_context = g.w_focus;
 	g.h_focus   = g.h - g.h_brush - 4 * g.padding;
 
-	g.from = '2015-08-01 00:00:00';
-	g.till = '2015-10-31 00:00:00';
+	g.from = '2015-10-01 00:00:00';
+	g.till = '2016-02-31 00:00:00';
 
 	//var parseDate = d3.time.format("%-d/%Y").parse;
 	var sqlDate    = d3.time.format("%Y-%m-%d 00:00:00");
@@ -102,13 +123,16 @@ App.timegrid.render = function (defaults) {
 		.scale(g.scale_x_c)
 		.tickFormat(formatDate)
 		.orient('top');
+		
 	g.axis_y = d3.svg.axis()
 		.scale(g.scale_y_f)
 		.orient('left')
 		.tickFormat(function (d) {
-			var user = App.data.users_by_fullname[d];
-			console.log(user);
-			return d;
+			var year_split = App.data.year_splits[d];
+			var shown_year = moment(g.scale_x_f.invert(g.w_focus / 3)).year();
+			var sum = 0;
+			if (year_split && year_split[shown_year]) { sum = year_split[shown_year]; }
+			return d + ' - ' + sum + '/10';
 		})
 		;
 	// SVG
@@ -170,7 +194,7 @@ App.timegrid.render = function (defaults) {
 				return right - left;
 			})
 			;
-		bar.append('text').text(function (d) { return d.VacationType.title; } )
+		bar.append('text').text(function (d) { return d.Vacation.id + '. ' + d.VacationType.title; } )
 			.attr('dy', Math.floor(g.h_bar / 2) + 5 + 'px')
 			.attr('dx', '5px')
 			;
@@ -223,6 +247,7 @@ App.timegrid.render = function (defaults) {
 		// two bottom axes - one for ticks, one for labels
 		focus.select(".x.axis.bottom").call(g.axis_x_f_bottom);
 		focus.select(".x.axis.bottom_labels").call(g.axis_x_f_bottom_labels);
+		focus.select(".y.axis").call(g.axis_y);
 		bars.selectAll(".bar")
 			.attr('transform', function (d) {
 				var left = g.scale_x_f(parseDate(d.Vacation.start));
@@ -240,10 +265,17 @@ App.timegrid.render = function (defaults) {
 
 	function brushed() {
 		// adjust focused scale
-		http://stackoverflow.com/questions/22873551/d3-js-brush-controls-getting-extent-width-coordinates
+		// http://stackoverflow.com/questions/22873551/d3-js-brush-controls-getting-extent-width-coordinates
 		var extent = g.brush.extent();
-		var days_diff = moment(extent[1]).diff(moment(extent[0]), 'days')
-		if (days_diff >= 30 && days_diff <= 92) {
+		var day_diff = moment(extent[1]).diff(moment(extent[0]), 'days');
+		
+		var shown_year = moment(g.scale_x_c.invert(g.w_focus / 3)).year();
+		if (g.last_shown_year != shown_year) {
+			App.compute_year_splits();
+			g.last_shown_year = shown_year;
+		}
+		
+		if (day_diff >= 30 && day_diff <= 92) {
 			g.last_brush_extent = extent;
 			g.last_selection = d3.select(this);
 			g.scale_x_f.domain(g.brush.empty() ? g.scale_x_c.domain() : g.brush.extent());
@@ -351,7 +383,7 @@ App.timegrid.render = function (defaults) {
 		if (App.timegrid.mousedown_g) {
 			// end point
 			var point = d3.mouse(this);
-			App.timegrid.mousedown_data.end_js = addDays(g.scale_x_f.invert(point[0]), 1); // one plus os we floor
+			App.timegrid.mousedown_data.end_js = addDays(g.scale_x_f.invert(point[0]), 1); // one plus as we floor
 			App.timegrid.mousedown_data.end = sqlDate(App.timegrid.mousedown_data.end_js); // floor to midnight done here
 
 			// new Vacation
