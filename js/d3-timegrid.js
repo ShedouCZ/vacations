@@ -5,10 +5,20 @@ App.timegrid.mousedown_data = {};
 
 App.data = App.data || {};
 App.data.users_by_fullname = {};
+
 // construct lookup table
 for (var key in App.data.users) {
 	var fullname = App.data.users[key].User.fullname;
 	App.data.users_by_fullname[fullname] = App.data.users[key];
+}
+
+App.get_vacation_stats = function (vacations) {
+	vacations = vacations || App.data.vacations;
+	for (var key in vacations) {
+		var fullname = vacations[key].User.fullname;
+		App.data.vacations_by_fullname[fullname][year] = App.data.vacations[key];
+	}
+
 }
 
 App.timegrid.render = function (defaults) {
@@ -94,8 +104,13 @@ App.timegrid.render = function (defaults) {
 		.orient('top');
 	g.axis_y = d3.svg.axis()
 		.scale(g.scale_y_f)
-		.orient('left');
-
+		.orient('left')
+		.tickFormat(function (d) {
+			var user = App.data.users_by_fullname[d];
+			console.log(user);
+			return d;
+		})
+		;
 	// SVG
 	var svg = d3.select("#timegrid")
 		.attr("width", g.w)
