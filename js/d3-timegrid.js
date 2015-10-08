@@ -31,6 +31,12 @@ App.get_vacation_year_split = function (vacation) {
 	res[$start.year()] = $end.diff($start, 'days');
 	return res;
 };
+App.sum_year_splits = function (obj1, obj2) {
+	for (var attrname in obj2) {
+		obj1[attrname] = obj2[attrname] + (obj1[attrname] || 0);
+	}
+	return obj1;
+};
 App.data.year_splits = {};
 App.compute_year_splits = function (vacations) {
 	vacations = vacations || App.data.vacations;
@@ -38,7 +44,12 @@ App.compute_year_splits = function (vacations) {
 		var fullname = vacations[key].User.fullname;
 		var vacation = vacations[key].Vacation;
 		var year_split = App.get_vacation_year_split(vacation);
-		App.data.year_splits[fullname] = year_split;
+		if (!App.data.year_splits[fullname]) {
+			App.data.year_splits[fullname] = year_split;
+		} else {
+			App.data.year_splits[fullname] = App.sum_year_splits(App.data.year_splits[fullname], year_split);
+		}
+		
 	}
 };
 
@@ -52,8 +63,8 @@ App.timegrid.render = function (defaults) {
 	g.w_context = g.w_focus;
 	g.h_focus   = g.h - g.h_brush - 4 * g.padding;
 
-	g.from = '2015-10-01 00:00:00';
-	g.till = '2016-02-31 00:00:00';
+	g.from = '2015-08-01 00:00:00';
+	g.till = '2016-02-01 00:00:00';
 
 	//var parseDate = d3.time.format("%-d/%Y").parse;
 	var sqlDate    = d3.time.format("%Y-%m-%d 00:00:00");
@@ -271,6 +282,7 @@ App.timegrid.render = function (defaults) {
 		
 		var shown_year = moment(g.scale_x_c.invert(g.w_focus / 3)).year();
 		if (g.last_shown_year != shown_year) {
+			// TODO have to avoid this on every brush event!!!!
 			App.compute_year_splits();
 			g.last_shown_year = shown_year;
 		}
