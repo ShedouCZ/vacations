@@ -29,6 +29,7 @@ App.timegrid.render = function (defaults) {
 	var czDate     = d3.time.format("%-d.%-m. %Y");
 	var parseDate  = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 	var formatDate = d3.time.format("%-d.%-m.");
+	var formatDay  = d3.time.format("%-d");
 
 
 	// SCALES
@@ -59,12 +60,33 @@ App.timegrid.render = function (defaults) {
 		.scale(g.scale_x_f)
 		.tickSize(-1 * g.h_focus)  // full height up to the top
 		.ticks(d3.time.day, 1)
-		.tickFormat(formatDate)
+		.tickFormat('')
+		.orient('bottom');
+	g.axis_x_f_bottom_labels = d3.svg.axis() // two bottom axes - one for ticks, one for labels
+		.scale(g.scale_x_f)
+		.tickSize(0)
+		.tickPadding(7)
+		.ticks(d3.time.hour, 12)
+		.tickFormat(function (d) {
+			if (d.getHours() == 12) {
+				return formatDay(d);
+			} else {
+				return null;
+			}
+		})
 		.orient('bottom');
 	g.axis_x_f_top = d3.svg.axis()
 		.scale(g.scale_x_f)
-		.ticks(d3.time.day, 1)
-		.tickFormat(formatDate)
+		.ticks(d3.time.hour, 12)
+		.tickFormat(function (d) {
+			if (d.getHours() == 12) {
+				return formatDay(d);
+			} else {
+				return null;
+			}
+		})
+		.tickSize(0)
+		.tickPadding(7)
 		.orient('top');
 	g.axis_x_c = d3.svg.axis()
 		.scale(g.scale_x_c)
@@ -142,7 +164,14 @@ App.timegrid.render = function (defaults) {
 	focus.append("g")
 		.attr("class", "x axis bottom")
 		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
-		.call(g.axis_x_f_bottom);
+		.call(g.axis_x_f_bottom)
+		.call(g.axis_x_f_bottom_labels)
+		;
+	focus.append("g")
+		.attr("class", "x axis bottom_labels")
+		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
+		.call(g.axis_x_f_bottom_labels)
+		;
 
 	focus.append("g")
 		.attr("class", "y axis")
@@ -159,7 +188,7 @@ App.timegrid.render = function (defaults) {
 		.call(g.axis_x_f_top);
 
 	// brush
-	var brush = d3.svg.brush()
+	g.brush = d3.svg.brush()
 		.x(g.scale_x_c)
 		.extent([g.scale_x_c.invert(0), g.scale_x_c.invert(g.w_focus / 3)])
 		.on("brush", brushed)
@@ -167,36 +196,18 @@ App.timegrid.render = function (defaults) {
 
 	context.append("g")
 		.attr("class", "x brush")
-		.call(brush)
+		.call(g.brush)
 		.selectAll("rect") // two of then there: background + extent
 		.attr("y", 1)
 		.attr("height", g.h_brush - 2*g.padding - 7);
 
 	rejoin(App.data.vacations, bars, context);
 
-	// draw axes
-
-	// draw grid
-	// g.ticks = 6;
-	//
-	// g.grid_axis_y = g.axis_y.ticks(g.ticks)
-	// 	.tickSize(g.w, 0)
-	// 	.tickFormat('')
-	// 	.orient('right');
-	//
-	// g.grid_axis_x = g.axis_x_f.ticks(g.ticks)
-	// 	.tickSize(-g.h, 0)
-	// 	.tickFormat('')
-	// 	.orient('top');
-
-	// svg.append("g")
-	// 	.classed('y', true)
-	// 	.classed('grid', true)
-	// 	.call(g.grid_axis_y);
-
 	function rescale() {
 		context.select(".x.axis.top").call(g.axis_x_f_top);
+		// two bottom axes - one for ticks, one for labels
 		focus.select(".x.axis.bottom").call(g.axis_x_f_bottom);
+		focus.select(".x.axis.bottom_labels").call(g.axis_x_f_bottom_labels);
 		bars.selectAll(".bar")
 			.attr('transform', function (d) {
 				var left = g.scale_x_f(parseDate(d.Vacation.start));
@@ -214,11 +225,21 @@ App.timegrid.render = function (defaults) {
 
 	function brushed() {
 		// adjust focused scale
-		g.scale_x_f.domain(brush.empty() ? g.scale_x_c.domain() : brush.extent());
-		// update bars+axis to draw with new scales
-		rescale();
-		// reset zoom scale
-		// zoom.x(g.scale_x_f);
+		http://stackoverflow.com/questions/22873551/d3-js-brush-controls-getting-extent-width-coordinates
+		var extent = g.brush.extent();
+		var days_diff = moment(extent[1]).diff(moment(extent[0]), 'days')
+		if (days_diff >= 30 && days_diff <= 92) {
+			g.last_brush_extent = extent;
+			g.last_selection = d3.select(this);
+			g.scale_x_f.domain(g.brush.empty() ? g.scale_x_c.domain() : g.brush.extent());
+			// update bars+axis to draw with new scales
+			rescale();
+			// reset zoom scale
+			// zoom.x(g.scale_x_f);
+		} else {
+			g.brush.extent(g.last_brush_extent);
+			g.brush(g.last_selection);
+		}
 	}
 
 	// redraw immediately to show selected (1/4) extent
@@ -230,8 +251,8 @@ App.timegrid.render = function (defaults) {
 		var x = d3.event.translate[0];
 		rescale();
 		// force changing brush range
-		brush.extent(g.scale_x_f.domain());
-		svg.select(".brush").call(brush);
+		g.brush.extent(g.scale_x_f.domain());
+		svg.select(".brush").call(g.brush);
 	}
 	var zoom = d3.behavior.zoom()
 		//.scaleExtent([1, 27])

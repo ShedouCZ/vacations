@@ -1,2 +1,2 @@
 <?php
-	$config['css.version.string'] = 1;
+	$config['css.version.string'] = 3;
