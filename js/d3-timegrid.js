@@ -153,7 +153,8 @@ App.timegrid.render = function (defaults) {
 		.attr("height", g.h)
 	;
 
-	svg.append("defs").append("clipPath")
+	var defs = svg.append("defs");
+	defs.append("clipPath")
 		.attr("id", "clip")
 		.append("rect")
 		.attr("width", g.w_focus)
@@ -206,21 +207,28 @@ App.timegrid.render = function (defaults) {
 				return right - left;
 			})
 			;
-		// clipPath to clip text
-		bar.append('defs').append('clipPath')
-			.attr('id', function (d) { return 'r' + d.Vacation.id; })
-			.append('rect')
-			.attr("height", g.h_bar)
-			.attr('width', function (d) {
-				var left  = g.scale_x_f(parseDate(d.Vacation.start));
-				var right = g.scale_x_f(parseDate(d.Vacation.end));
-				return right - left;
-			})
-			;
 		bar.append('text').text(function (d) { return d.Vacation.id + '. ' + d.VacationType.title; } )
 			.attr('dy', Math.floor(g.h_bar / 2) + 5 + 'px')
 			.attr('dx', '5px')
-			.attr('clip-path', function(d) { return 'url(#r' + d.Vacation.id + ')'})
+			.attr('clip-path', function(d) {
+				var day_diff = App.get_vacation_length(d.Vacation.start, d.Vacation.end);
+				var clip_id = 'r-days-' + day_diff;
+				if (d3.select('#' + clip_id).empty()) {
+					// clippath to clip text (grouped by days)
+					var left  = g.scale_x_f(parseDate(d.Vacation.start));
+					var right = g.scale_x_f(parseDate(d.Vacation.end));
+					var width = right - left;
+					defs.append('clipPath')
+						.classed('r-days', true)
+						.attr('id', clip_id)
+						.append('rect')
+						.datum(d) // so we may easily rescale
+						.attr("height", g.h_bar)
+						.attr('width', width)
+						;
+				}
+				return 'url(#' + clip_id + ')'
+			})
 			;
 	}
 
@@ -285,8 +293,8 @@ App.timegrid.render = function (defaults) {
 					return right - left;
 				})
 			;
-		bars.selectAll(".bar")
-			.select('defs clipPath rect')
+
+		defs.selectAll('.r-days rect')
 				.attr('width', function (d) {
 					var left  = g.scale_x_f(parseDate(d.Vacation.start));
 					var right = g.scale_x_f(parseDate(d.Vacation.end));
