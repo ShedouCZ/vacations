@@ -426,6 +426,8 @@ App.timegrid.render = function (defaults) {
 			//.attr('width', d3.mouse(this)[0] - App.timegrid.mousedown_data.x0 )
 			.attr('width', end_x - App.timegrid.mousedown_data.x0 )
 		;
+		// TODO update user tick in y.axis with new number of days!
+		//focus.select(".y.axis").call(g.axis_y);
 	}
 
 	function addDays(date, days) {
@@ -443,25 +445,22 @@ App.timegrid.render = function (defaults) {
 			App.timegrid.mousedown_data.end = sqlDate(App.timegrid.mousedown_data.end_js); // floor to midnight done here
 
 			// new Vacation
+			var fullname = App.timegrid.mousedown_data.user_fullname;
 			var Vacation = {
 				id: 'PLACEHOLDER',
 				start: App.timegrid.mousedown_data.start,
 				end: App.timegrid.mousedown_data.end,
 				vacation_type_id: 2,
-				user_id: 114
+				user_id: App.data.users_by_fullname[fullname].User.id
 			};
 			var item = {
 				Vacation: Vacation,
-				User: {
-					fullname: App.timegrid.mousedown_data.user_fullname
-				},
-				VacationType: {
-					title: 'Služební cesta'
-				}
 			};
+			App.enrich_vacation(item);
 			App.data.vacations.push(item);
 			App.compute_year_splits();
 			rejoin(App.data.vacations, bars, context);
+			focus.select(".y.axis").call(g.axis_y);
 
 			// TODO ajax submit + PLACEHOLDERs update
 			var url = '/admin/vacations/add';
