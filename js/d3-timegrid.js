@@ -7,11 +7,23 @@ App.timegrid.mousedown_data = {};
 
 App.data = App.data || {};
 App.data.users_by_fullname = {};
+App.data.users_by_id = {};
 
 // construct lookup table
 for (var key in App.data.users) {
 	var fullname = App.data.users[key].User.fullname;
 	App.data.users_by_fullname[fullname] = App.data.users[key];
+	var id = App.data.users[key].User.id;
+	App.data.users_by_id[id] = App.data.users[key];
+}
+
+// enrich vacations by futher info for easier lookups
+App.enrich_vacation = function (vacation) {
+	vacation.User = App.data.users_by_id[vacation.Vacation.user_id].User;
+	vacation.VacationType = App.data.vacation_types[vacation.Vacation.vacation_type_id];
+};
+for (var key in App.data.vacations) {
+	App.enrich_vacation(App.data.vacations[key]);
 }
 
 App.get_vacation_length = function (start, end) {
@@ -144,7 +156,11 @@ App.timegrid.render = function (defaults) {
 			var shown_year = moment(g.scale_x_f.invert(g.w_focus / 3)).year();
 			var sum = 0;
 			if (year_split && year_split[shown_year]) { sum = year_split[shown_year]; }
-			return d + ' - ' + sum + '/10';
+			var user = App.data.users_by_fullname[d];
+			var employee_type = App.data.employee_types[user.User.employee_type_id];
+			var max = '0';
+			if (employee_type && employee_type.days) max = employee_type.days;
+			return d + ' - ' + sum + '/' + max;
 		})
 		;
 	// SVG
