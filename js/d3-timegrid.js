@@ -40,6 +40,7 @@ App.sum_year_splits = function (obj1, obj2) {
 App.data.year_splits = {};
 App.compute_year_splits = function (vacations) {
 	vacations = vacations || App.data.vacations;
+	App.data.year_splits = {};
 	for (var key in vacations) {
 		var fullname = vacations[key].User.fullname;
 		var vacation = vacations[key].Vacation;
@@ -49,7 +50,7 @@ App.compute_year_splits = function (vacations) {
 		} else {
 			App.data.year_splits[fullname] = App.sum_year_splits(App.data.year_splits[fullname], year_split);
 		}
-		
+
 	}
 };
 
@@ -64,7 +65,7 @@ App.timegrid.render = function (defaults) {
 	g.h_focus   = g.h - g.h_brush - 4 * g.padding;
 
 	g.from = '2015-08-01 00:00:00';
-	g.till = '2016-02-01 00:00:00';
+	g.till = '2016-03-01 00:00:00';
 
 	//var parseDate = d3.time.format("%-d/%Y").parse;
 	var sqlDate    = d3.time.format("%Y-%m-%d 00:00:00");
@@ -134,7 +135,7 @@ App.timegrid.render = function (defaults) {
 		.scale(g.scale_x_c)
 		.tickFormat(formatDate)
 		.orient('top');
-		
+
 	g.axis_y = d3.svg.axis()
 		.scale(g.scale_y_f)
 		.orient('left')
@@ -205,9 +206,21 @@ App.timegrid.render = function (defaults) {
 				return right - left;
 			})
 			;
+		// clipPath to clip text
+		bar.append('defs').append('clipPath')
+			.attr('id', function (d) { return 'r' + d.Vacation.id; })
+			.append('rect')
+			.attr("height", g.h_bar)
+			.attr('width', function (d) {
+				var left  = g.scale_x_f(parseDate(d.Vacation.start));
+				var right = g.scale_x_f(parseDate(d.Vacation.end));
+				return right - left;
+			})
+			;
 		bar.append('text').text(function (d) { return d.Vacation.id + '. ' + d.VacationType.title; } )
 			.attr('dy', Math.floor(g.h_bar / 2) + 5 + 'px')
 			.attr('dx', '5px')
+			.attr('clip-path', function(d) { return 'url(#r' + d.Vacation.id + ')'})
 			;
 	}
 
@@ -240,7 +253,7 @@ App.timegrid.render = function (defaults) {
 	// brush
 	g.brush = d3.svg.brush()
 		.x(g.scale_x_c)
-		.extent([g.scale_x_c.invert(0), g.scale_x_c.invert(g.w_focus / 3)])
+		.extent([g.scale_x_c.invert(0), g.scale_x_c.invert(g.w_focus / 4)])
 		.on("brush", brushed)
 		;
 
@@ -272,6 +285,14 @@ App.timegrid.render = function (defaults) {
 					return right - left;
 				})
 			;
+		bars.selectAll(".bar")
+			.select('defs clipPath rect')
+				.attr('width', function (d) {
+					var left  = g.scale_x_f(parseDate(d.Vacation.start));
+					var right = g.scale_x_f(parseDate(d.Vacation.end));
+					return right - left;
+				})
+			;
 	}
 
 	function brushed() {
@@ -279,14 +300,13 @@ App.timegrid.render = function (defaults) {
 		// http://stackoverflow.com/questions/22873551/d3-js-brush-controls-getting-extent-width-coordinates
 		var extent = g.brush.extent();
 		var day_diff = moment(extent[1]).diff(moment(extent[0]), 'days');
-		
-		var shown_year = moment(g.scale_x_c.invert(g.w_focus / 3)).year();
+		var shown_year = moment(g.scale_x_f.invert(g.w_focus / 4)).year();
+
 		if (g.last_shown_year != shown_year) {
-			// TODO have to avoid this on every brush event!!!!
 			App.compute_year_splits();
 			g.last_shown_year = shown_year;
 		}
-		
+
 		if (day_diff >= 30 && day_diff <= 92) {
 			g.last_brush_extent = extent;
 			g.last_selection = d3.select(this);
@@ -301,7 +321,7 @@ App.timegrid.render = function (defaults) {
 		}
 	}
 
-	// redraw immediately to show selected (1/4) extent
+	// redraw immediately to show selected (1/3) extent
 	brushed();
 
 	function zoomed() {
@@ -416,6 +436,7 @@ App.timegrid.render = function (defaults) {
 				}
 			};
 			App.data.vacations.push(item);
+			App.compute_year_splits();
 			rejoin(App.data.vacations, bars, context);
 
 			// TODO ajax submit + PLACEHOLDERs update
