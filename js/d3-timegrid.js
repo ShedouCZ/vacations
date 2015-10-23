@@ -8,6 +8,7 @@ App.timegrid.mousedown_data = {};
 App.data = App.data || {};
 App.data.users_by_fullname = {};
 App.data.users_by_id = {};
+App.data.ticks_by_fullname = {};
 
 // construct lookup table
 for (var key in App.data.users) {
@@ -27,7 +28,7 @@ for (var key in App.data.vacations) {
 }
 
 App.get_vacation_length = function (start, end) {
-	return moment(end).diff(moment(start), 'days');
+	return moment(end).startOf('day').diff(moment(start).endOf('day').add(1, 'ms'), 'days');
 };
 App.get_vacation_year_split = function (vacation) {
 	var $start = moment(vacation.start);
@@ -160,6 +161,10 @@ App.timegrid.render = function (defaults) {
 			var employee_type = App.data.employee_types[user.User.employee_type_id];
 			var max = '0';
 			if (employee_type && employee_type.days) max = employee_type.days;
+			// store reference to the tick element
+			App.data.ticks_by_fullname[d] = this;
+			$(this).data('max', max);
+			$(this).data('sum', sum);
 			return d + ' - ' + sum + '/' + max;
 		})
 		;
@@ -382,6 +387,8 @@ App.timegrid.render = function (defaults) {
 		App.timegrid.mousedown_data.x0 = g.scale_x_f(parseDate(App.timegrid.mousedown_data.start));
 		App.timegrid.mousedown_data.user_fullname = g.scale_y_f.invert(point[1]);
 		App.timegrid.mousedown_data.user = App.data.users_by_fullname[App.timegrid.mousedown_data.user_fullname];
+		App.timegrid.mousedown_data.$label = $(App.data.ticks_by_fullname[App.timegrid.mousedown_data.user_fullname]);
+		App.timegrid.mousedown_data.original_label = App.timegrid.mousedown_data.$label.text();
 
 		App.timegrid.mousedown_g = focus.append("g")
 			.attr('transform', function (d) {
@@ -414,7 +421,7 @@ App.timegrid.render = function (defaults) {
 			var end_rounded = sqlDate(addDays(end_js, 1));
 			end_x = g.scale_x_f(parseDate(end_rounded));
 
-			App.timegrid.hover_line.attr("x1", mouse_x).attr("x2", mouse_x);
+			//App.timegrid.hover_line.attr("x1", mouse_x).attr("x2", mouse_x);
 			App.timegrid.hover_date.text(formatDate(end_js));
   			App.timegrid.hover_date.attr('x', mouse_x + 5);
 			App.timegrid.hover_date.attr('y', mouse_y - 20);
@@ -428,6 +435,16 @@ App.timegrid.render = function (defaults) {
 		;
 		// TODO update user tick in y.axis with new number of days!
 		//focus.select(".y.axis").call(g.axis_y);
+		var sum = App.timegrid.mousedown_data.$label.data('sum');
+		var max = App.timegrid.mousedown_data.$label.data('max');
+		var d = App.timegrid.mousedown_data.user_fullname;
+		// adjust sum
+		// TODO only if the year is same as displayed!!!
+		console.log(App.timegrid.mousedown_data.start_js, end_js);
+		// TODO need to floor/ceil them!!!
+		sum += App.get_vacation_length(App.timegrid.mousedown_data.start_js, end_js) + 1;
+		App.timegrid.mousedown_data.$label.text(d + ' - ' + sum + '/' + max);
+
 	}
 
 	function addDays(date, days) {
@@ -486,7 +503,7 @@ App.timegrid.render = function (defaults) {
 			// adding hoverline
 			App.timegrid.hover_group = focus.append("g")
 				.classed("hover-line", true);
-			App.timegrid.hover_line = App.timegrid.hover_group.append("line")
+			if (0) App.timegrid.hover_line = App.timegrid.hover_group.append("line")
 				.attr("x1", 10).attr("x2", 10)
 				.attr("y1", 0).attr("y2", g.h_focus);
 			App.timegrid.hover_date = App.timegrid.hover_group.append('text')
