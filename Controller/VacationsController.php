@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 class VacationsController extends AppController {
 	public $layout = 'BootstrapCake.bootstrap';
 	public $components = array('Paginator', 'Session');
-	
+
 	// declare public actions
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -14,9 +14,9 @@ class VacationsController extends AppController {
 		$this->Vacation->recursive = 0;
 		$this->set('vacations', $this->Paginator->paginate());
 	}
-	
+
 	public function calendar() {
-		
+
 	}
 
 	public function view($id = null) {
@@ -31,8 +31,13 @@ class VacationsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Vacation->create();
 			if ($this->Vacation->save($this->request->data)) {
-				$this->Session->setFlash(__('The vacation has been saved.'), 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('action' => 'index'));
+				if ($this->request->is('ajax')) {
+					echo $this->Vacation->id;
+					exit();
+				} else {
+					$this->Session->setFlash(__('The vacation has been saved.'), 'default', array('class' => 'alert alert-success'));
+					return $this->redirect(array('action' => 'index'));
+				}
 			} else {
 				$this->Session->setFlash(__('The vacation could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}

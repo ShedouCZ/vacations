@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 					}
 				},
 				files: {
-					'js/templates.js': ['View/**/*.hbs']
+					'dist/templates.js': ['View/**/*.hbs']
 				}
 			}
 		},
@@ -133,6 +133,8 @@ module.exports = function(grunt) {
 					'Vendor/Sortable/Sortable.js',
 					'Vendor/d3/d3.js',
 					'dist/browserify-bundle.js',
+					'node_modules/grunt-contrib-handlebars/node_modules/handlebars/dist/handlebars.runtime.js',
+					'dist/templates.js',
 					'js/post.js',
 					'js/d3-timegrid.js'
 				],
@@ -295,7 +297,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['scripts', 'stylesheets', 'copy']);
 	grunt.registerTask('stylesheets', ['less', 'concat:css', /*'postcss', 'cssmin'*/]);
 	//grunt.registerTask('scripts', ['browserify:dev', 'concat:js', 'concat:js_post']);
-	grunt.registerTask('scripts', ['concat:js', 'concat:js_post']);
+	grunt.registerTask('scripts', ['handlebars', 'concat:js', 'concat:js_post']);
 
 	grunt.registerTask('locales', ['po2json', 'json']);
 	//grunt.registerTask('stylesheets', ['less', 'concat:css', 'cssmin']);

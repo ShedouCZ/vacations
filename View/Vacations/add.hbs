@@ -1,0 +1,49 @@
+<div id="vacations-add-hbs" class="row">
+    <div class="column-md-12">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="VacationTitle" class="col-sm-2 control-label">Title</label>
+                <div class="col-sm-7 input-group">
+                    <input name="data[Vacation][title]" class="form-control" placeholder="Title" maxlength="255" type="text" id="VacationTitle">
+                </div>
+            </div>
+
+            <div class="form-group">
+            <label for="VacationVacationTypeId" class="col-sm-2 control-label">Type</label>
+                <div class="col-sm-7 input-group">
+                    <select name="data[Vacation][vacation_type_id]" class="form-control" placeholder="Type" id="VacationVacationTypeId">
+                        {{#each vacation_types}}
+                            <option value="{{id}}">{{title}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="VacationStart" class="col-sm-2 control-label">Start</label>
+                <div class="col-sm-7 input-group">
+                    <div class="input-group">
+                        <input name="data[Vacation][start]" value="{{start}}" class="form-control" data-provide="datepicker" data-date-format="D.M. YYYY" placeholder="Start" type="text" id="VacationStart" required="required"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="VacationEnd" class="col-sm-2 control-label">End</label>
+                <div class="col-sm-7 input-group">
+                    <div class="input-group">
+                        <input name="data[Vacation][end]" value="{{end}}" class="form-control" data-provide="datepicker" data-date-format="D.M. YYYY" placeholder="End" type="text" id="VacationEnd" required="required"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="VacationUserId" class="col-sm-2 control-label">User</label>
+                <div class="col-sm-7 input-group">
+                    <p class="form-control-static">{{fullname}}</p>
+                    <!--select name="data[Vacation][user_id]" class="form-control" placeholder="User Id" id="VacationUserId">
+                    </select-->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

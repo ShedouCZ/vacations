@@ -442,7 +442,6 @@ App.timegrid.render = function (defaults) {
 		var d = App.timegrid.mousedown_data.user_fullname;
 		// adjust sum
 		// TODO account for year splits here as well
-		console.log(App.timegrid.mousedown_data.start_js, end_js);
 		// + 1 ... include the ending day
 		sum += App.get_vacation_length(App.timegrid.mousedown_data.start_js, end_js) + 1;
 		App.timegrid.mousedown_data.$label.text(d + ' - ' + sum + '/' + max);
@@ -460,43 +459,103 @@ App.timegrid.render = function (defaults) {
 		if (App.timegrid.mousedown_g) {
 			// end point
 			var point = d3.mouse(this);
-			App.timegrid.mousedown_data.end_js = addDays(g.scale_x_f.invert(point[0]), 1); // one plus as we floor
+			App.timegrid.mousedown_data.end_js = addDays(g.scale_x_f.invert(point[0]), 1); // plus one as we floor
 			App.timegrid.mousedown_data.end = sqlDate(App.timegrid.mousedown_data.end_js); // floor to midnight done here
 
-			// new Vacation
-			var fullname = App.timegrid.mousedown_data.user_fullname;
-			var Vacation = {
-				id: 'PLACEHOLDER',
-				start: App.timegrid.mousedown_data.start,
-				end: App.timegrid.mousedown_data.end,
-				vacation_type_id: 2,
-				user_id: App.data.users_by_fullname[fullname].User.id
-			};
-			var item = {
-				Vacation: Vacation,
-			};
-			App.enrich_vacation(item);
-			App.data.vacations.push(item);
-			App.compute_year_splits();
-			rejoin(App.data.vacations, bars, context);
-			focus.select(".y.axis").call(g.axis_y);
+			var clearing = function () {
+				// clearing
+				App.timegrid.mousedown_g.remove();
+				App.timegrid.mousedown_g = false;
+				App.timegrid.mousedown_data = {};
+				focus.select(".y.axis").call(g.axis_y);
+			}
 
-			// TODO ajax submit + PLACEHOLDERs update
-			var url = '/admin/vacations/add';
-			var data = {
-				Vacation: {
-					vacation_type_id: 2,
-					title: 'none',
-					start: czDate(App.timegrid.mousedown_data.start_js),
-					end: czDate(App.timegrid.mousedown_data.end_js),
-					user_id: App.timegrid.mousedown_data.user.User.id
+			var view_vars = {
+				start: moment(App.timegrid.mousedown_data.start).format('DD.MM. YYYY'),
+				end:   moment(App.timegrid.mousedown_data.end).subtract(1, 'day').format('DD.MM. YYYY'),
+				vacation_types: App.data.vacation_types,
+				fullname: App.timegrid.mousedown_data.user_fullname
+			};
+
+			bootbox.dialog({
+				title: "Create New Vacation",
+				message: App.render["/Vacations/add"](view_vars),
+				onEscape: function  () {
+					clearing();
+				},
+				buttons: {
+					cancel: {
+						label: "Cancel",
+						className: "btn-default",
+						callback: function () {
+							clearing();
+						}
+					},
+					success: {
+						label: "Save",
+						className: "btn-success",
+						callback: function () {
+							var title = $('#vacations-add-hbs #VacationTitle').val();
+							var vacation_type_id = $('#vacations-add-hbs #VacationVacationTypeId').val();
+
+							// new Vacation
+							var fullname = App.timegrid.mousedown_data.user_fullname;
+							var Vacation = {
+								id: 'x',
+								title: title,
+								start: App.timegrid.mousedown_data.start,
+								end:   App.timegrid.mousedown_data.end,
+								vacation_type_id: vacation_type_id,
+								user_id: App.data.users_by_fullname[fullname].User.id
+							};
+							var item = {
+								Vacation: Vacation,
+							};
+							App.enrich_vacation(item);
+							App.data.vacations.push(item);
+							App.compute_year_splits();
+							rejoin(App.data.vacations, bars, context);
+							focus.select(".y.axis").call(g.axis_y);
+
+							// ajax submit
+							var url = '/vacations/add';
+							var data = {
+								Vacation: {
+									vacation_type_id: 2,
+									title: title,
+									start: czDate(App.timegrid.mousedown_data.start_js),
+									end: czDate(App.timegrid.mousedown_data.end_js),
+									user_id: App.timegrid.mousedown_data.user.User.id
+								}
+							};
+							var xhr = $.post(url, {data:data})
+
+							clearing();
+
+							// PLACEHOLDER id update
+							xhr.done(function (result) {
+								item.Vacation.id = result;
+								// TODO update label
+							});
+							xhr.fail(function (result) {
+								console.log(result);
+							});
+						}
+					}
 				}
-			};
-			$.post(url, {data:data});
-
-			App.timegrid.mousedown_g.remove();
-			App.timegrid.mousedown_g = false;
-			App.timegrid.mousedown_data = {};
+			})
+			.init(function () {
+				// timepickers init
+				$('#vacations-add-hbs input[data-provide=datepicker]').datetimepicker()
+				.next().click(function() {
+					// clicking an input-group-addon (next sibling)
+					$(this).prev().focus();
+				});
+			})
+			.on('shown.bs.modal', function(){
+				// focus
+				$('#vacations-add-hbs #VacationTitle').focus();
+			});
 		}
 	}
 
