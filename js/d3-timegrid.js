@@ -28,9 +28,9 @@ for (var key in App.data.vacations) {
 }
 
 App.get_vacation_length = function (start, end) {
-	// for db vacations during clipping the label
-	// for mouse events during creation of vacations
 	// we interpret end as exclusive and ceil both using startOf('day')
+	// for db vacations during clipping the label ... ok
+	// for mouse events during creation of vacations the callee does +1 to account for the exclusive end date
 	return moment(end).startOf('day').diff(moment(start).startOf('day'), 'days');
 };
 App.get_vacation_year_split = function (vacation) {
@@ -436,14 +436,14 @@ App.timegrid.render = function (defaults) {
 			//.attr('width', d3.mouse(this)[0] - App.timegrid.mousedown_data.x0 )
 			.attr('width', end_x - App.timegrid.mousedown_data.x0 )
 		;
-		// TODO update user tick in y.axis with new number of days!
+		// update user tick in y.axis with new number of days!
 		var sum = App.timegrid.mousedown_data.$label.data('sum');
 		var max = App.timegrid.mousedown_data.$label.data('max');
 		var d = App.timegrid.mousedown_data.user_fullname;
 		// adjust sum
-		// TODO only if the year is same as displayed!!!
+		// TODO account for year splits here as well
 		console.log(App.timegrid.mousedown_data.start_js, end_js);
-		// TODO need to floor/ceil them!!!
+		// + 1 ... include the ending day
 		sum += App.get_vacation_length(App.timegrid.mousedown_data.start_js, end_js) + 1;
 		App.timegrid.mousedown_data.$label.text(d + ' - ' + sum + '/' + max);
 
