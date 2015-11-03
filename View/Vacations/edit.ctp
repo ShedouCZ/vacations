@@ -25,6 +25,9 @@
 					<?php echo $this->Form->input('id', array('class'=>'form-control', 'placeholder'=>__('Id')));?>
 				</div>
 				<div class="form-group">
+					<?php echo $this->Form->input('vacation_type_id', array('class'=>'form-control', 'placeholder'=>__('Vacation Types Id')));?>
+				</div>
+				<div class="form-group">
 					<?php echo $this->Form->input('title', array('class'=>'form-control', 'placeholder'=>__('Title')));?>
 				</div>
 				<div class="form-group">
@@ -54,9 +57,6 @@
 						'value' => $this->request->data['Vacation']['end_cz']
 						//BEWARE: datepicker needs JS initialization
 					));?>
-				</div>
-				<div class="form-group">
-					<?php echo $this->Form->input('vacation_type_id', array('class'=>'form-control', 'placeholder'=>__('Vacation Types Id')));?>
 				</div>
 				<div class="form-group">
 					<?php echo $this->Form->input('user_id', array('class'=>'form-control', 'placeholder'=>__('User Id')));?>

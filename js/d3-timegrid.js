@@ -488,7 +488,7 @@ App.timegrid.render = function (defaults) {
 
 			var view_vars = {
 				start: moment(App.timegrid.mousedown_data.start).format('DD.MM. YYYY'),
-				end:   moment(App.timegrid.mousedown_data.end).subtract(1, 'day').format('DD.MM. YYYY'),
+				end:   moment(App.timegrid.mousedown_data.end).subtract(1, 'day').format('DD.MM. YYYY'), // -1 day for humans as our end is exclusive moment
 				vacation_types: App.data.vacation_types,
 				fullname: App.timegrid.mousedown_data.user_fullname
 			};
@@ -511,17 +511,27 @@ App.timegrid.render = function (defaults) {
 						label: "Save",
 						className: "btn-success",
 						callback: function () {
-							var title = $('#vacations-add-hbs #VacationTitle').val();
-							var vacation_type_id = $('#vacations-add-hbs #VacationVacationTypeId').val();
+							var fields = {
+								title: '#VacationTitle',
+								vacation_type_id: '#VacationVacationTypeId',
+								start: '#VacationStart',
+								end: '#VacationEnd'
+							};
+							Object.keys(fields).map(function(k,i) {
+								fields[k] = $('#vacations-add-hbs '+fields[k]).val();
+							});
+
+							// end date: humans -> exclusive moment
+							fields.end = moment(fields.end, 'DD.MM. YYYY').add(1,'day').format('DD.MM. YYYY');
 
 							// new Vacation
 							var fullname = App.timegrid.mousedown_data.user_fullname;
 							var Vacation = {
 								id: 'x',
-								title: title,
-								start: App.timegrid.mousedown_data.start,
-								end:   App.timegrid.mousedown_data.end,
-								vacation_type_id: vacation_type_id,
+								title: fields.title,
+								start: moment(fields.start, 'DD.MM. YYYY').format('YYYY-MM-DD 00:00:00'),
+								end:   moment(fields.end, 'DD.MM. YYYY').format('YYYY-MM-DD 00:00:00'),
+								vacation_type_id: fields.vacation_type_id,
 								user_id: App.data.users_by_fullname[fullname].User.id
 							};
 							var item = {
@@ -537,10 +547,10 @@ App.timegrid.render = function (defaults) {
 							var url = '/vacations/add';
 							var data = {
 								Vacation: {
-									vacation_type_id: vacation_type_id,
-									title: title,
-									start: czDate(App.timegrid.mousedown_data.start_js),
-									end: czDate(App.timegrid.mousedown_data.end_js),
+									vacation_type_id: fields.vacation_type_id,
+									title: fields.title,
+									start: fields.start,
+									end:   fields.end,
 									user_id: App.timegrid.mousedown_data.user.User.id
 								}
 							};
