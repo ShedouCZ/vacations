@@ -45,7 +45,8 @@
         "webtechnick/configuration": "dev-bootstrap_theme",
         "ptica/LdapAuth": "dev-master",
         "dereuromark/cakephp-tools": "2.x-dev",
-        "ptica/auth-helper" : "dev-master"
+        "ptica/auth-helper" : "dev-master",
+        "mexitek/phpcolors": "0.4.*"
     },
     "require-dev": {
         "cakephp/debug_kit": "2.2.*"

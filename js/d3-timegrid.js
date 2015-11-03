@@ -221,6 +221,9 @@ App.timegrid.render = function (defaults) {
 					var top  = g.scale_y_f(d.User.fullname);
 					return "translate("+left+","+top+")";
 				})
+				.attr("class", function (d) {
+					return 'type-' + d.VacationType.id;
+				})
 				.classed('bar', true)
 			;
 		bar.append('rect')
