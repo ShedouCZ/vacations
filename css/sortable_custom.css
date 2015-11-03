@@ -6,7 +6,7 @@ ul {
 
 .container {
 	width: 80%;
-	margin: auto;
+	/* margin: auto; REMOVING AS IT CONFLICTS WITH CUNISTYLE margin-bottom */
 	min-width: 1100px;
 	max-width: 1300px;
 	position: relative;

@@ -37,6 +37,7 @@
 				<ul class="nav nav-pills pull-right">
 					<?php if (AuthComponent::user('act_role') >= Configure::read('available_roles.user')) { ?>
 						<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;' . __('New Vacation'), array('action' => 'add'), array('escape' => false)); ?></li>
+						<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;' . __('List Vacations'), array('action'=>'index'), array('escape'=>false)); ?></li>
 					<?php } ?>
 				</ul>
 				<h1><?php echo __('Vacations'); ?></h1>
