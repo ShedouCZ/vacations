@@ -3,16 +3,10 @@
     font: 10px sans-serif;
 	display: block;
 }
-.grid .tick {
-    stroke: lightgrey;
-    opacity: 0.7;
-}
-.grid path {
-    stroke-width: 0;
-}
 .axis.y {
 	font: 14px sans-serif;
 }
+.bar { cursor: pointer; }
 .bar rect {
 	stroke: #ADD8E6;
 	stroke-width: 2px;
@@ -25,6 +19,10 @@
 	font-size: 11px;
 	letter-spacing: 1px;
 	opacity: 1;
+    pointer-events: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
 }
 .axis path,
 .axis line {
@@ -39,6 +37,7 @@
 .axis.x.bottom .tick line {
   stroke: #aaa;
   stroke-dasharray: 2,2;
+  pointer-events: none;
 }
 
 .brush .extent {

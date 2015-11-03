@@ -6,7 +6,7 @@
 				<ul class="nav nav-pills pull-right">
 					<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;' . __('List Vacations'), array('action'=>'index'), array('escape'=>false)); ?></li>
 				</ul>
-				<h1><?php echo __('Admin Add Vacation'); ?></h1>
+				<h1><?php echo __('Add Vacation'); ?></h1>
 			</div>
 		</div>
 	</div>
@@ -51,7 +51,7 @@
 						//BEWARE: datepicker needs JS initialization
 					));?>
 				</div>
-				
+
 				<div class="form-group">
 					<?php echo $this->Form->input('user_id', array('class'=>'form-control', 'placeholder'=>__('User Id')));?>
 				</div>

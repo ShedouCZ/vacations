@@ -7,7 +7,7 @@
 					<li><?php echo $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;' . __('Delete'), array('action'=>'delete', $this->Form->value('Vacation.id')), array('escape'=>false), __('Are you sure you want to delete # %s?', $this->Form->value('Vacation.id'))); ?></li>
 					<li><?php echo $this->Html->link('<span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;' . __('List Vacations'), array('action'=>'index'), array('escape'=>false)); ?></li>
 				</ul>
-				<h1><?php echo __('Admin Edit Vacation'); ?></h1>
+				<h1><?php echo __('Edit Vacation'); ?></h1>
 			</div>
 		</div>
 	</div>

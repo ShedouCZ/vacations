@@ -392,6 +392,11 @@ App.timegrid.render = function (defaults) {
 	;
 
 	function mousedown () {
+		if (d3.select(d3.event.target.parentNode).datum()) {
+			// target is a bar - a click listener will fire
+			return;
+		}
+
 		d3.event.preventDefault();
 		svg.classed('active', true);
 
@@ -595,13 +600,20 @@ App.timegrid.render = function (defaults) {
 		App.timegrid.hover_group.remove();
 		App.timegrid.hover_group = false;
 	}
+	function mouseclick () {
+		var d;
+		if (d = d3.select(d3.event.target.parentNode).datum()) {
+			window.location = "/vacations/edit/"+d.Vacation.id
+		}
+	}
 
 	focus
-		.on('mousedown', mousedown)
-		.on('mousemove', mousemove)
-		.on('mouseup',   mouseup)
+		.on('mousedown' , mousedown)
+		.on('mousemove' , mousemove)
+		.on('mouseup'   , mouseup)
 		.on('mouseenter', mouseenter)
-		.on('mouseleave',  mouseleave)
+		.on('mouseleave', mouseleave)
+		.on('click'     , mouseclick)
 	;
 
 };
