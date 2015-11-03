@@ -36,7 +36,7 @@ class VacationsController extends AppController {
 					exit();
 				} else {
 					$this->Session->setFlash(__('The vacation has been saved.'), 'default', array('class' => 'alert alert-success'));
-					return $this->redirect(array('action' => 'index'));
+					return $this->redirect($this->recall_index_page());
 				}
 			} else {
 				if ($this->request->is('ajax')) {
@@ -46,6 +46,8 @@ class VacationsController extends AppController {
 					$this->Session->setFlash(__('The vacation could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 				}
 			}
+		} else {
+			$this->remember_referer_as_index_page();
 		}
 		$vacationTypes = $this->Vacation->VacationType->find('list');
 		$users = $this->Vacation->User->find('list');
@@ -59,11 +61,12 @@ class VacationsController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Vacation->save($this->request->data)) {
 				$this->Session->setFlash(__('The vacation has been saved.'), 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect($this->recall_index_page());
 			} else {
 				$this->Session->setFlash(__('The vacation could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}
 		} else {
+			$this->remember_referer_as_index_page();
 			$options = array('conditions' => array('Vacation.' . $this->Vacation->primaryKey => $id));
 			$this->request->data = $this->Vacation->find('first', $options);
 		}
@@ -83,6 +86,6 @@ class VacationsController extends AppController {
 		} else {
 			$this->Session->setFlash(__('The vacation could not be deleted. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect($this->recall_index_page());
 	}
 }

@@ -90,4 +90,17 @@ class AppController extends Controller {
 		// to reach Auth->isAuthorized()
 		$this->helpers['AuthHelper.Auth']['Auth'] = $this->Auth;
 	}
+
+	protected function remember_referer_as_index_page() {
+		$referer = $this->request->referer($local=true);
+		$this->Session->write('remembered_index_page', $referer);
+	}
+	protected function recall_index_page() {
+		if ($this->Session->check('remembered_index_page')) {
+			return $this->Session->read('remembered_index_page');
+		} else {
+			return array('action'=>'index');
+		}
+	}
+
 }
