@@ -80,9 +80,6 @@ App.timegrid.render = function (defaults) {
 	g.w_context = g.w_focus;
 	g.h_focus   = g.h - g.h_brush - 4 * g.padding;
 
-	g.from = '2015-08-01 00:00:00';
-	g.till = '2016-03-01 00:00:00';
-
 	//var parseDate = d3.time.format("%-d/%Y").parse;
 	var sqlDate    = d3.time.format("%Y-%m-%d 00:00:00");
 	var czDate     = d3.time.format("%-d.%-m. %Y");
@@ -206,6 +203,33 @@ App.timegrid.render = function (defaults) {
 		.attr("class", "context")
 		.attr("transform", "translate(" + g.padding_left + ", " + g.padding + ")")
 		;
+
+	focus.append("g")
+		.attr("class", "x axis bottom")
+		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
+		.call(g.axis_x_f_bottom)
+		.call(g.axis_x_f_bottom_labels)
+		;
+	focus.append("g")
+		.attr("class", "x axis bottom_labels")
+		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
+		.call(g.axis_x_f_bottom_labels)
+		;
+
+	focus.append("g")
+		.attr("class", "y axis")
+		.call(g.axis_y);
+
+	context.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0,0)")
+		.call(g.axis_x_c);
+
+	context.append("g")
+		.attr("class", "x axis top")
+		.attr("transform", "translate(0, " + (g.h_brush - g.padding - 1) + ")")
+		.call(g.axis_x_f_top);
+
 	var bars = focus.append("g")
 		.classed("bars", true)
 		.attr("clip-path", "url(#clip)")
@@ -268,32 +292,6 @@ App.timegrid.render = function (defaults) {
 		// removals
 		bar.exit().remove();
 	}
-
-	focus.append("g")
-		.attr("class", "x axis bottom")
-		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
-		.call(g.axis_x_f_bottom)
-		.call(g.axis_x_f_bottom_labels)
-		;
-	focus.append("g")
-		.attr("class", "x axis bottom_labels")
-		.attr("transform", "translate(0, " + (g.h - g.h_brush - 4*g.padding) + ")")
-		.call(g.axis_x_f_bottom_labels)
-		;
-
-	focus.append("g")
-		.attr("class", "y axis")
-		.call(g.axis_y);
-
-	context.append("g")
-		.attr("class", "x axis")
-		.attr("transform", "translate(0,0)")
-		.call(g.axis_x_c);
-
-	context.append("g")
-		.attr("class", "x axis top")
-		.attr("transform", "translate(0, " + (g.h_brush - g.padding - 1) + ")")
-		.call(g.axis_x_f_top);
 
 	// brush
 	g.brush = d3.svg.brush()
@@ -623,5 +621,9 @@ if ($('#Vacations').length) {
 	g.h_bar = 25;
 	g.h = App.data.users.length * g.h_bar + 10;
 	g.w = parseInt($('#Vacations').css('width'),10);
+
+	g.from = moment().startOf('month').format('YYYY-MM-DD HH:mm:ss');
+	g.till = moment().endOf('month').add(5,'months').endOf('month').format('YYYY-MM-DD HH:mm:ss');
+
 	App.timegrid.render(g);
 }
