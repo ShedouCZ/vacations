@@ -53,7 +53,7 @@
 				</div>
 
 				<div class="form-group">
-					<?php echo $this->Form->input('user_id', array('class'=>'form-control', 'placeholder'=>__('User Id')));?>
+					<?php echo $this->Form->input('user_id', array('default'=>AuthComponent::user('id'), 'class'=>'form-control', 'placeholder'=>__('User Id')));?>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-8">
