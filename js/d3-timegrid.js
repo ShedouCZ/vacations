@@ -215,7 +215,14 @@ App.timegrid.render = function (defaults) {
 	function rejoin (data, bars, context) {
 		var bar = bars.selectAll(".bar")
 			.data(data)
-			.enter().append("g")
+			;
+
+		// update already existing data
+		bar.select('text').text(function (d) { return d.Vacation.id + '. ' + d.VacationType.title; } )
+
+		// new arrivals
+		var enter = bar.enter();
+		var group = enter.append("g")
 				.attr('transform', function (d) {
 					var left = g.scale_x_f(parseDate(d.Vacation.start));
 					var top  = g.scale_y_f(d.User.fullname);
@@ -226,7 +233,7 @@ App.timegrid.render = function (defaults) {
 				})
 				.classed('bar', true)
 			;
-		bar.append('rect')
+		group.append('rect')
 			.attr("height", g.h_bar)
 			.attr('width', function (d) {
 				var left  = g.scale_x_f(parseDate(d.Vacation.start));
@@ -234,7 +241,7 @@ App.timegrid.render = function (defaults) {
 				return right - left;
 			})
 			;
-		bar.append('text').text(function (d) { return d.Vacation.id + '. ' + d.VacationType.title; } )
+		group.append('text').text(function (d) { return d.Vacation.id + '. ' + d.VacationType.title; } )
 			.attr('dy', Math.floor(g.h_bar / 2) + 5 + 'px')
 			.attr('dx', '5px')
 			.attr('clip-path', function(d) {
@@ -257,6 +264,9 @@ App.timegrid.render = function (defaults) {
 				return 'url(#' + clip_id + ')'
 			})
 			;
+
+		// removals
+		bar.exit().remove();
 	}
 
 	focus.append("g")
@@ -515,7 +525,7 @@ App.timegrid.render = function (defaults) {
 								Vacation: Vacation,
 							};
 							App.enrich_vacation(item);
-							App.data.vacations.push(item);
+							var item_index = App.data.vacations.push(item) - 1; // push returns new length
 							App.compute_year_splits();
 							rejoin(App.data.vacations, bars, context);
 							focus.select(".y.axis").call(g.axis_y);
@@ -524,7 +534,7 @@ App.timegrid.render = function (defaults) {
 							var url = '/vacations/add';
 							var data = {
 								Vacation: {
-									vacation_type_id: 2,
+									vacation_type_id: vacation_type_id,
 									title: title,
 									start: czDate(App.timegrid.mousedown_data.start_js),
 									end: czDate(App.timegrid.mousedown_data.end_js),
@@ -535,13 +545,18 @@ App.timegrid.render = function (defaults) {
 
 							clearing();
 
-							// PLACEHOLDER id update
+							// replace fake id with server generated one
 							xhr.done(function (result) {
 								item.Vacation.id = result;
-								// TODO update label
+								// update bars
+								rejoin(App.data.vacations, bars, context);
 							});
 							xhr.fail(function (result) {
 								console.log(result);
+								// remove item from App.data.vacations
+								App.data.vacations.splice(item_index, 1);
+								// update bars
+								rejoin(App.data.vacations, bars, context);
 							});
 						}
 					}

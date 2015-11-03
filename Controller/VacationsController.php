@@ -39,7 +39,12 @@ class VacationsController extends AppController {
 					return $this->redirect(array('action' => 'index'));
 				}
 			} else {
-				$this->Session->setFlash(__('The vacation could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
+				if ($this->request->is('ajax')) {
+					throw new NotFoundException(__('Invalid vacation'));
+					exit();
+				} else {
+					$this->Session->setFlash(__('The vacation could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
+				}
 			}
 		}
 		$vacationTypes = $this->Vacation->VacationType->find('list');
