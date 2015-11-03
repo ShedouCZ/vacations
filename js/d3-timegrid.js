@@ -606,13 +606,17 @@ App.timegrid.render = function (defaults) {
 	}
 
 	focus
-		.on('mousedown' , mousedown)
 		.on('mousemove' , mousemove)
-		.on('mouseup'   , mouseup)
 		.on('mouseenter', mouseenter)
 		.on('mouseleave', mouseleave)
 		.on('click'     , mouseclick)
 	;
+	if (App.user_id) {
+		focus
+			.on('mousedown' , mousedown)
+			.on('mouseup'   , mouseup)
+		;
+	}
 
 };
 
