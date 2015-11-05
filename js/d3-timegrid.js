@@ -390,8 +390,14 @@ App.timegrid.render = function (defaults) {
 	;
 
 	function mousedown () {
+		var point = d3.mouse(this);
+
 		if (d3.select(d3.event.target.parentNode).datum()) {
 			// target is a bar - a click listener will fire
+			return;
+		}
+		if (!g.scale_y_f.invert(point[1])) {
+			// target has no user
 			return;
 		}
 
