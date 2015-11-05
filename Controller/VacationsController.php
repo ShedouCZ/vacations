@@ -13,10 +13,11 @@ class VacationsController extends AppController {
 	public function index() {
 		$this->Vacation->recursive = 0;
 		$this->set('vacations', $this->Paginator->paginate());
+		$this->remember_location();
 	}
 
 	public function calendar() {
-
+		$this->remember_location();
 	}
 
 	public function view($id = null) {
@@ -73,6 +74,7 @@ class VacationsController extends AppController {
 		$vacationTypes = $this->Vacation->VacationType->find('list');
 		$users = $this->Vacation->User->find('list');
 		$this->set(compact('vacationTypes', 'users'));
+		$this->set('remembered_location', $this->recall_location());
 	}
 
 	public function delete($id = null) {

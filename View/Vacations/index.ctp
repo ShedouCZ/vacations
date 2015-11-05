@@ -30,9 +30,9 @@
 				<tbody>
 				<?php foreach ($vacations as $vacation) { ?>
 					<tr>
-						<td><?php echo h($vacation['Vacation']['title']); ?></td>
+						<td><?php echo $this->Html->link($vacation['Vacation']['title'], array('action' => 'edit', $vacation['Vacation']['id'])); ?></td>
 						<td><?php echo $this->Time->format($vacation['Vacation']['start'], '%-d.%-m.&nbsp;%Y'); ?></td>
-						<td><?php echo $this->Time->format($vacation['Vacation']['end'], '%-d.%-m.&nbsp;%Y'); ?></td>
+						<td><?php echo $this->Time->format($vacation['Vacation']['end_inclusive'], '%-d.%-m.&nbsp;%Y'); ?></td>
 						<td>
 							<?php echo $this->Html->link($vacation['VacationType']['title'], array('controller' => 'vacation_types', 'action' => 'view', $vacation['VacationType']['id'])); ?>
 						</td>

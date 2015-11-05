@@ -91,6 +91,13 @@ class AppController extends Controller {
 		$this->helpers['AuthHelper.Auth']['Auth'] = $this->Auth;
 	}
 
+	protected function remember_location() {
+		$here = $this->request->here;
+		$this->Session->write('remembered_page', $here);
+	}
+	protected function recall_location() {
+		return $this->Session->read('remembered_page');
+	}
 	protected function remember_referer_as_index_page() {
 		$referer = $this->request->referer($local=true);
 		$this->Session->write('remembered_index_page', $referer);
